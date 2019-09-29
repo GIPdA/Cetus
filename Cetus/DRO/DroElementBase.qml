@@ -35,6 +35,7 @@ Item {
         height: mainFrame.height * 1.05
         width: height
         border.width: 2
+        border.color: root.borderColor
         color: root.axisColor
 
         Text {
@@ -42,6 +43,7 @@ Item {
             anchors.centerIn: parent
             font.pixelSize: text.length == 1 ? 50 : 33
             text: root.axisName
+            //color: root.textColor
         }
     }
 

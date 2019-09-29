@@ -36,4 +36,7 @@ include(translation.pri)
 
 DISTFILES += \
     Cetus/CoolantControls.qml \
-    Cetus/StatusBar/FileNameLabel.qml
+    Cetus/StatusBar/FileNameLabel.qml \
+    Cetus/ManualTab/AxisButtonGroup.qml \
+    Cetus/ManualTab/JogDistanceButtonGroup.qml \
+    Cetus/Controls/CombinedJogVelocitySlider.qml

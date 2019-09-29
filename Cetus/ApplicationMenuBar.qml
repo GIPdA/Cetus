@@ -1,5 +1,5 @@
-import QtQuick 2.0
-import QtQuick.Controls 1.2
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 import Machinekit.Application.Controls 1.0
 import Machinekit.PathView 1.0
 
@@ -28,7 +28,7 @@ MenuBar {
 
         MenuItem {
             text: qsTr("&Disconnect from Session")
-            iconName: "network-disconnect"
+            icon.name: "network-disconnect"
             onTriggered: window.disconnect()
         }
 
@@ -40,8 +40,8 @@ MenuBar {
 
         MenuItem {
             text: qsTr("E&xit User Interface")
-            iconName: "application-exit"
-            shortcut: "Ctrl+Q"
+            icon.name: "application-exit"
+            action: Action { shortcut: "Ctrl+Q" }
             onTriggered: Qt.quit()
         }
     }

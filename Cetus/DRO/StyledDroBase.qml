@@ -7,6 +7,7 @@ AbstractDigitalReadOut {
     implicitWidth: mainFrame.width
     implicitHeight: mainFrame.height + extraFrame.height + g5xOffsetsFrame.height + toolOffsetsFrame.height
     visible: _ready
+    offsetsVisible: true
 
     DroElementFrame {
         id: mainFrame

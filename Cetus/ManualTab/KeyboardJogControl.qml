@@ -1,10 +1,10 @@
-import QtQuick 2.5
-import QtQuick.Controls 1.2
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 import Machinekit.Application 1.0
 
 ApplicationItem {
     property int axes: status.synced ? status.config.axes : 3
-    property var decerementKeys: ["Left", "Down", "Page Down", "["]
+    property var decrementKeys: ["Left", "Down", "Page Down", "["]
     property var incrementKeys: ["Right", "Up", "Page Up", "]"]
     property var axisSelectionKeys: ["X", "Y", "Z", "A"]
 
@@ -19,83 +19,100 @@ ApplicationItem {
         id: d
         function activateIncrement(axis) {
             root.selectAxis(axis);
-            root.selectIncrement(1);
             root.increment(true);
+        }
+        function deactivateIncrement(axis) {
+            root.selectAxis(axis);
             root.increment(false);
         }
 
         function activateDecrement(axis) {
             root.selectAxis(axis);
-            root.selectIncrement(1);
             root.decrement(true);
+        }
+        function deactivateDecrement(axis) {
+            root.selectAxis(axis);
             root.decrement(false);
         }
     }
 
-    Shortcut {
+    // Decrement keys
+    KeystrokeWatcher {
         readonly property int index: 0
-        sequence: root.decerementKeys[index]
-        onActivated: d.activateDecrement(index)
+        sequence: root.decrementKeys[index]
+        onPressed: d.activateDecrement(index)
+        onReleased: d.deactivateDecrement(index);
         enabled: root.axes >= (index + 1)
         autoRepeat: false
     }
 
-    Shortcut {
+    KeystrokeWatcher {
         readonly property int index: 1
-        sequence: root.decerementKeys[index]
-        onActivated: d.activateDecrement(index)
+        sequence: root.decrementKeys[index]
+        onPressed: d.activateDecrement(index)
+        onReleased: d.deactivateDecrement(index);
         enabled: root.axes >= (index + 1)
         autoRepeat: false
     }
 
-    Shortcut {
+    KeystrokeWatcher {
         readonly property int index: 2
-        sequence: root.decerementKeys[index]
-        onActivated: d.activateDecrement(index)
+        sequence: root.decrementKeys[index]
+        onPressed: d.activateDecrement(index)
+        onReleased: d.deactivateDecrement(index);
         enabled: root.axes >= (index + 1)
         autoRepeat: false
     }
 
-    Shortcut {
+    KeystrokeWatcher {
         readonly property int index: 3
-        sequence: root.decerementKeys[index]
-        onActivated: d.activateDecrement(index)
+        sequence: root.decrementKeys[index]
+        onPressed: d.activateDecrement(index)
+        onReleased: d.deactivateDecrement(index);
         enabled: root.axes >= (index + 1)
         autoRepeat: false
     }
 
-    Shortcut {
+
+    // Increment keys
+    KeystrokeWatcher {
         readonly property int index: 0
         sequence: root.incrementKeys[index]
-        onActivated: d.activateIncrement(index)
+        onPressed: d.activateIncrement(index)
+        onReleased: d.deactivateIncrement(index);
         enabled: root.axes >= (index + 1)
         autoRepeat: false
     }
 
-    Shortcut {
+    KeystrokeWatcher {
         readonly property int index: 1
         sequence: root.incrementKeys[index]
-        onActivated: d.activateIncrement(index)
+        onPressed: d.activateIncrement(index)
+        onReleased: d.deactivateIncrement(index);
         enabled: root.axes >= (index + 1)
         autoRepeat: false
     }
 
-    Shortcut {
+    KeystrokeWatcher {
         readonly property int index: 2
         sequence: root.incrementKeys[index]
-        onActivated: d.activateIncrement(index)
+        onPressed: d.activateIncrement(index)
+        onReleased: d.deactivateIncrement(index);
         enabled: root.axes >= (index + 1)
         autoRepeat: false
     }
 
-    Shortcut {
+    KeystrokeWatcher {
         readonly property int index: 3
         sequence: root.incrementKeys[index]
-        onActivated: d.activateIncrement(index)
+        onPressed: d.activateIncrement(index)
+        onReleased: d.deactivateIncrement(index);
         enabled: root.axes >= (index + 1)
         autoRepeat: false
     }
 
+
+    // Axis Selection
     Shortcut {
         readonly property int index: 0
         sequence: root.axisSelectionKeys[index]

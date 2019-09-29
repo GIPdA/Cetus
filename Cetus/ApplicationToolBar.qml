@@ -1,7 +1,6 @@
-import QtQuick 2.0
-import QtQuick.Controls 1.2
-import QtQuick.Layouts 1.1
-import QtQuick.Window 2.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 import Machinekit.Application.Controls 1.0
 import Machinekit.PathView 1.0
 import Machinekit.Controls 1.0
@@ -24,6 +23,7 @@ ToolBar {
         ToolButton { action: StepProgramAction { shortcut: "" } }
         ToolButton { action: PauseResumeProgramAction { shortcut: "" } }
         ToolButton { action: StopProgramAction { shortcut: "" } }
+        /*
         Spacer {}
         ToolButton { action: ZoomOutAction { view: pathViewConfig } }
         ToolButton { action: ZoomInAction { view: pathViewConfig } }
@@ -33,6 +33,7 @@ ToolBar {
         ToolButton { action: ViewModeAction { view: pathViewConfig; viewMode: "Front" } visible: action.visible }
         ToolButton { action: ViewModeAction { view: pathViewConfig; viewMode: "Side" } visible: action.visible }
         ToolButton { action: ViewModeAction { view: pathViewConfig; viewMode: "Perspective" } visible: action.visible }
+        //*/
         Spacer {}
         ToolButton { action: ClearBackplotAction { shortcut: "" } }
     }

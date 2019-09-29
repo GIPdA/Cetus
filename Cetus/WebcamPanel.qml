@@ -1,5 +1,5 @@
-import QtQuick 2.0
-import QtQuick.Controls 1.2
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 import Machinekit.VideoView 1.0
 import Machinekit.Service 1.0
 

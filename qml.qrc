@@ -41,5 +41,6 @@
         <file>Cetus/ConfigurationPanel/MaximumVelocityControl.qml</file>
         <file>Cetus/ConfigurationPanel/GantryConfigControl.qml</file>
         <file>Cetus/StatusBar/FileNameLabel.qml</file>
+        <file>Cetus/Controls/CombinedJogVelocityHandler.qml</file>
     </qresource>
 </RCC>

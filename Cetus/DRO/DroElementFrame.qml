@@ -1,5 +1,6 @@
-import QtQuick 2.5
-import QtQuick.Layouts 1.1
+import QtQuick 2.12
+import QtQuick.Layouts 1.12
+import "../style"
 
 Item {
     property var axes: ["X", "Y", "Z"]
@@ -8,11 +9,11 @@ Item {
     property string centerText: "Position"
     property string rightText: "Distance to Go"
     property bool rightTextVisible: false
-    property int margin: 15
-    property color backgroundColor: "white"
-    property color frameColor: "black"
-    property color borderColor: "gray"
-    property color textColor: "black"
+    property int margin: 10
+    property color backgroundColor: CetusStyle.control.background.color
+    property color frameColor: CetusStyle.control.border.color
+    property color borderColor: CetusStyle.control.border.color
+    property color textColor: CetusStyle.control.text.color
     property int decimals: 3
     property int digits: 4
 
@@ -28,6 +29,7 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.margins: root.margin
+        anchors.leftMargin: 15
         implicitHeight: container.height + root.margin * 4
         radius: 10
         border.width: 2
@@ -51,7 +53,7 @@ Item {
                     backgroundColor: root.backgroundColor
                     textColor: root.textColor
                     axisName: root.model[index].name
-                    axisColor: root.model[index ].color
+                    axisColor: root.model[index].color
                     rightTextVisible: root.rightTextVisible
                     decimals: root.decimals
                     digits: root.digits
