@@ -36,7 +36,10 @@ include(translation.pri)
 
 DISTFILES += \
     Cetus/CoolantControls.qml \
+    Cetus/DRO/DroAxisRow.qml \
+    Cetus/DRO/MultiAxisDro.qml \
     Cetus/StatusBar/FileNameLabel.qml \
     Cetus/ManualTab/AxisButtonGroup.qml \
     Cetus/ManualTab/JogDistanceButtonGroup.qml \
-    Cetus/Controls/CombinedJogVelocitySlider.qml
+    Cetus/Controls/CombinedJogVelocitySlider.qml \
+    Cetus/icons/Icon.qml

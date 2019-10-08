@@ -12,15 +12,12 @@
         <file>Cetus/ErrorTab.qml</file>
         <file>Cetus/AboutDialog.qml</file>
         <file>Cetus/ApplicationToolBarMobile.qml</file>
-        <file>Cetus/DRO/DroElementBase.qml</file>
-        <file>Cetus/DRO/DroElementFrame.qml</file>
         <file>Cetus/DRO/DroLabelText.qml</file>
         <file>Cetus/DRO/MultiText.qml</file>
         <file>Cetus/DRO/StyledDro.qml</file>
         <file>Init.qml</file>
         <file>Cetus/PreviewPanel.qml</file>
         <file>Cetus/DroPanel.qml</file>
-        <file>Cetus/DRO/StyledDroBase.qml</file>
         <file>Cetus/WebcamPanel.qml</file>
         <file>Cetus/Singletons/Info.qml</file>
         <file>Cetus/Singletons/qmldir</file>
@@ -42,5 +39,30 @@
         <file>Cetus/ConfigurationPanel/GantryConfigControl.qml</file>
         <file>Cetus/StatusBar/FileNameLabel.qml</file>
         <file>Cetus/Controls/CombinedJogVelocityHandler.qml</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <file alias="3d-coordinates-perspective">Cetus/icons/xhdpi/3d-coordinates-perspective.png</file>
+        <file alias="3d-coordinates-x-color">Cetus/icons/xhdpi/3d-coordinates-x-color.png</file>
+        <file alias="3d-coordinates-x">Cetus/icons/xhdpi/3d-coordinates-x.png</file>
+        <file alias="3d-coordinates-y-color">Cetus/icons/xhdpi/3d-coordinates-y-color.png</file>
+        <file alias="3d-coordinates-y-r-color">Cetus/icons/xhdpi/3d-coordinates-y-r-color.png</file>
+        <file alias="3d-coordinates-y-r">Cetus/icons/xhdpi/3d-coordinates-y-r.png</file>
+        <file alias="3d-coordinates-y">Cetus/icons/xhdpi/3d-coordinates-y.png</file>
+        <file alias="3d-coordinates-z-color">Cetus/icons/xhdpi/3d-coordinates-z-color.png</file>
+        <file alias="3d-coordinates-z">Cetus/icons/xhdpi/3d-coordinates-z.png</file>
+        <file alias="clean">Cetus/icons/xhdpi/clean.png</file>
+        <file alias="edit-gcode-file">Cetus/icons/xhdpi/edit-gcode-file.png</file>
+        <file alias="open-gcode">Cetus/icons/xhdpi/open-gcode.png</file>
+        <file alias="pause">Cetus/icons/xhdpi/pause.png</file>
+        <file alias="play">Cetus/icons/xhdpi/play.png</file>
+        <file alias="power-off">Cetus/icons/xhdpi/power-off.png</file>
+        <file alias="power-on">Cetus/icons/xhdpi/power-on.png</file>
+        <file alias="reload">Cetus/icons/xhdpi/reload.png</file>
+        <file alias="resume">Cetus/icons/xhdpi/resume.png</file>
+        <file alias="stop-sign">Cetus/icons/xhdpi/stop-sign.png</file>
+        <file alias="stop">Cetus/icons/xhdpi/stop.png</file>
+        <file alias="zoom-in">Cetus/icons/xhdpi/zoom-in.png</file>
+        <file alias="zoom-out">Cetus/icons/xhdpi/zoom-out.png</file>
+        <file alias="home">Cetus/icons/xhdpi/home.png</file>
     </qresource>
 </RCC>

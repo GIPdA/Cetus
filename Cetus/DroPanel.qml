@@ -6,5 +6,7 @@ import "DRO"
 Item {
     StyledDro {
         anchors.fill: parent
+        anchors.margins: 20
+        anchors.topMargin: 50
     }
 }
