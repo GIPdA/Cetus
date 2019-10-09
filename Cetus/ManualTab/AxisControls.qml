@@ -3,7 +3,8 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import Machinekit.Application.Controls 1.0
 import "../Controls"
-import "../style"
+import "../CetusStyle"
+import "../items"
 
 ColumnLayout {
     id: root
@@ -18,66 +19,64 @@ ColumnLayout {
         JogButton {
             id: decrementButton
             Layout.fillWidth: true
-            //Layout.fillHeight: true
-            //implicitWidth: 50
+            Layout.fillHeight: true
+            implicitHeight: 80
+
             direction: -1
             distance: jogCombo.distance
             axis: axisRadioGroup.axis
-            text: "<"
-            font.pixelSize: CetusStyle.control.text.font.pixelSize*2
+            text: "-"
+            font.pixelSize: height*0.7
             font.family: CetusStyle.control.text.font.family
             font.bold: true
-            topPadding: 0
 
             contentItem: Text {
+                anchors.fill: parent
                 text: decrementButton.text
                 font: decrementButton.font
-                color: CetusStyle.control.text.color
+                color: CetusStyle.control.foreground.colorWhen(decrementButton.enabled)
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight
             }
-            background: Rectangle {
+            background: RoundedRectangle {
                 implicitWidth: 50
                 implicitHeight: 40
-                color: decrementButton.down ? "#2D2D2D" : "#000000"//CetusStyle.control.background.color
-                border.color: "#F2F2F2"//CetusStyle.control.border.color
-                border.width: 1
-                //border.color: control.down ? "#17a81a" : "#21be2b"
-                radius: 4
+                color: CetusStyle.control.background.colorWhen(decrementButton.enabled, decrementButton.down)
+                radius: CetusStyle.control.radius
+                radiusStyle: RoundedRectangle.RadiusStyle.LeftRadius
             }
         }
 
         JogButton {
             id: incrementButton
             Layout.fillWidth: true
-            //Layout.fillHeight: true
-            //implicitWidth: 50
+            Layout.fillHeight: true
+            implicitHeight: 80
+
             direction: 1
             distance: jogCombo.distance
             axis: axisRadioGroup.axis
-            text: ">"
-            font.pixelSize: CetusStyle.control.text.font.pixelSize*2
+            text: "+"
+            font.pixelSize: height*0.7
             font.family: CetusStyle.control.text.font.family
             font.bold: true
-            topPadding: 0
 
             contentItem: Text {
+                anchors.fill: parent
                 text: incrementButton.text
                 font: incrementButton.font
-                color: CetusStyle.control.text.color
+                color: CetusStyle.control.foreground.colorWhen(incrementButton.enabled)
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                elide: Text.ElideRight
+                //elide: Text.ElideRight
             }
-            background: Rectangle {
+            background: RoundedRectangle {
                 implicitWidth: 50
                 implicitHeight: 40
-                color: incrementButton.down ? "#2D2D2D" : "#000000"//CetusStyle.control.background.color
-                border.color: "#F2F2F2"//CetusStyle.control.border.color
-                border.width: 1
-                //border.color: control.down ? "#17a81a" : "#21be2b"
-                radius: 4
+                color: CetusStyle.control.background.colorWhen(incrementButton.enabled, incrementButton.down)
+                radius: CetusStyle.control.radius
+                radiusStyle: RoundedRectangle.RadiusStyle.RightRadius
             }
         }
 
@@ -99,7 +98,7 @@ ColumnLayout {
     RowLayout {
         Layout.fillWidth: true
         Layout.fillHeight: false
-        spacing: 6
+        spacing: 25
         //Layout.leftMargin: 10
         Layout.maximumHeight: axisRadioGroup.height
         Layout.maximumWidth: root.width
@@ -108,14 +107,6 @@ ColumnLayout {
             id: axisRadioGroup
             Layout.fillWidth: false
             Layout.fillHeight: true
-        }
-
-        Rectangle {
-            Layout.fillHeight: true
-            width: 3
-            radius: 2
-            //color: "steelblue"
-            opacity: 0.5
         }
 
         JogDistanceButtonGroup {
@@ -128,32 +119,67 @@ ColumnLayout {
     }
 
 
-    RowLayout {
+    ColumnLayout {
         Layout.fillWidth: true
         Layout.fillHeight: false
         //Layout.maximumWidth: root.width
+        spacing: 2
 
-        Button {
+        RoundedRectangle {
+            Layout.fillWidth: true
+            height: 6
+            color:CetusStyle.control.background.color
+            radius: CetusStyle.control.radius
+            radiusStyle: RoundedRectangle.RadiusStyle.TopRadius
+        }
+
+        RoundedButton {
             id: homeAllAxesButton
-            Layout.fillWidth: false
+            Layout.fillWidth: true
             action: HomeAxisAction { id: homeAxisAction; axis: -1 }
             visible: homeAxisAction.homeAllAxesHelper.homingOrderDefined
+
+            font.pixelSize: 22
+            font.italic: !enabled
+            color: CetusStyle.control.background.colorWhen(enabled, down, false)
+            textColor: CetusStyle.control.foreground.colorWhen(enabled)
+            radius: CetusStyle.control.radius
         }
 
-        Button {
+        RoundedButton {
             id: homeAxisButton
-            Layout.fillWidth: false
+            Layout.fillWidth: true
             action: HomeAxisAction { axis: axisRadioGroup.axis }
             visible: !homeAllAxesButton.visible
+
+            font.pixelSize: 22
+            font.italic: !enabled
+            color: CetusStyle.control.background.colorWhen(enabled, down, false)
+            textColor: CetusStyle.control.foreground.colorWhen(enabled)
+            radius: CetusStyle.control.radius
         }
 
-        Button {
-            Layout.fillWidth: false
+        RoundedButton {
+            Layout.fillWidth: true
             action: TouchOffAction { touchOffDialog: touchOffDialog }
+
+            font.pixelSize: 22
+            font.italic: !enabled
+            color: CetusStyle.control.background.colorWhen(enabled, down, false)
+            textColor: CetusStyle.control.foreground.colorWhen(enabled)
+            radius: CetusStyle.control.radius
+        }
+
+        RoundedRectangle {
+            Layout.fillWidth: true
+            height: 6
+            color:CetusStyle.control.background.color
+            radius: CetusStyle.control.radius
+            radiusStyle: RoundedRectangle.RadiusStyle.BottomRadius
         }
 
         Item {
-            Layout.fillWidth: true
+            Layout.fillHeight: true
         }
 
         TouchOffDialog {

@@ -14,6 +14,9 @@ QML_FILES += $$PWD/$$NAME/DRO/*.qml
 QML_FILES += $$PWD/$$NAME/ManualTab/*.qml
 QML_FILES += $$PWD/$$NAME/Singletons/*.qml
 QML_FILES += $$PWD/$$NAME/StatusBar/*.qml
+QML_FILES += $$PWD/$$NAME/icons/*.qml
+QML_FILES += $$PWD/$$NAME/items/*.qml
+QML_FILES += $$PWD/$$NAME/CetusStyle/*.qml
 OTHER_FILES += $$QML_FILES
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
@@ -35,11 +38,4 @@ TRANSLATIONS_OUT_PATH = $$PWD/$$NAME/translations
 include(translation.pri)
 
 DISTFILES += \
-    Cetus/CoolantControls.qml \
-    Cetus/DRO/DroAxisRow.qml \
-    Cetus/DRO/MultiAxisDro.qml \
-    Cetus/StatusBar/FileNameLabel.qml \
-    Cetus/ManualTab/AxisButtonGroup.qml \
-    Cetus/ManualTab/JogDistanceButtonGroup.qml \
-    Cetus/Controls/CombinedJogVelocitySlider.qml \
-    Cetus/icons/Icon.qml
+    Cetus/CoolantControls.qml

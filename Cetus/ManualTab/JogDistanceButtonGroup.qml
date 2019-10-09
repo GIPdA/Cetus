@@ -25,9 +25,12 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import Machinekit.Application 1.0
 import Machinekit.Application.Controls 1.0
-import "../style"
+import "../CetusStyle"
+import "../items"
 
 ColumnLayout {
+    id: root
+
     property alias settings: appObject.settings
     property alias axis: handler.axis
     property alias continuousVisible: handler.continuousVisible
@@ -36,9 +39,7 @@ ColumnLayout {
     property int currentIndex: 0
     readonly property bool __ready: handler.settings.initialized
 
-    id: root
-
-    spacing: 3
+    spacing: 2
 
     function __setIndex(index) {
         if (!__ready) {
@@ -83,58 +84,28 @@ ColumnLayout {
 
     Repeater {
         id: repeater
-        //Layout.fillWidth: true
         model: handler.incrementsModelReverse
         onModelChanged: __update()
 
-        Button {
+        RoundedButton {
             id: control
-            TextMetrics {
-                id: textMetrics
-                font: control.font
-                elide: Text.ElideNone
-                elideWidth: 1
-                text: modelData
-            }
-
             Layout.fillWidth: true
             Layout.fillHeight: true
-            //implicitWidth: textMetrics.width+10
-            text: modelData
-
-            contentItem: Text {
-                text: control.text
-                font: control.font
-                //color: control.checked ? CetusStyle.control.text.color : "#BBBBBB"//control.down ? "#17a81a" : "#21be2b"
-                color: control.checked ? "white" : "#BBBBBB"//control.down ? "#17a81a" : "#21be2b"
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                elide: Text.ElideRight
-            }
-
-            checkable: true
-            font.pixelSize: 22
-            font.bold: control.checked
 
             ButtonGroup.group: buttonGroup
 
-            padding: 0
-            horizontalPadding: 0
-            spacing: 0
-            topInset: 0
-            leftInset: 0
-            rightInset: 0
-            bottomInset: 0
+            checkable: true
+            font.pixelSize: 22
 
-            background: Rectangle {
-                implicitWidth: 100
-                implicitHeight: 35
-                color: control.checked ? "#888888" : control.down ? "#2D2D2D" : "#000000"//CetusStyle.control.background.color
-                border.color: "#F2F2F2"//CetusStyle.control.border.color
-                border.width: 1//control.checked ? 2 : 1
-                //border.color: control.down ? "#17a81a" : "#21be2b"
-                radius: 4
-            }
+            text: modelData
+
+            color: CetusStyle.control.background.colorWhen(control.enabled, control.down, control.checked)
+            textColor: CetusStyle.control.foreground.colorWhen(control.enabled)
+
+            radius: CetusStyle.control.radius
+            radiusStyle: index == 0 ? RoundedRectangle.TopRadius
+                                    : index == repeater.count-1 ? RoundedRectangle.BottomRadius
+                                                                : RoundedRectangle.NoRadius
 
             onCheckedChanged: {
                 if (checked)

@@ -1,6 +1,9 @@
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
 
+import "../CetusStyle"
+import "../items"
+
 Item {
     id: root
     implicitWidth: 200
@@ -8,61 +11,38 @@ Item {
 
     property string axisName: "?"
     property color axisColor: "#0096EC"
-    property color axisTextColor: "white"
-    property color backgroundColor: "#585858"
+    property color axisTextColor: CetusStyle.control.foreground.color
+    property color backgroundColor: CetusStyle.control.background.color
 
     default property alias content: contentLayout.data
 
     enum RadiusStyle {
         NoRadius,
         TopRadius,
-        BottomRadius
+        BottomRadius,
+        LeftRadius,
+        RightRadius
     }
     property int radiusStyle: DroAxisRow.RadiusStyle.NoRadius
 
     Rectangle {
         anchors.fill: parent
-        radius: 4
+        radius: CetusStyle.control.radius
         color: root.backgroundColor
     }
 
-    Rectangle {
+    RoundedRectangle {
         id: axisIndicator
         anchors {
             top: parent.top
             bottom: parent.bottom
             left: parent.left
         }
-        radius: 6
+        radius: CetusStyle.control.radius
         width: height
         color: root.axisColor
 
-        // Corners hiding rectangles
-        Rectangle {
-            anchors {
-                top: parent.top
-                left: parent.left
-                right: parent.right
-            }
-            visible:    root.radiusStyle === DroAxisRow.RadiusStyle.NoRadius
-                     || root.radiusStyle === DroAxisRow.RadiusStyle.BottomRadius
-            height: parent.radius
-            color: parent.color
-            antialiasing: parent.antialiasing
-        }
-
-        Rectangle {
-            anchors {
-                bottom: parent.bottom
-                left: parent.left
-                right: parent.right
-            }
-            visible:    root.radiusStyle === DroAxisRow.RadiusStyle.NoRadius
-                     || root.radiusStyle === DroAxisRow.RadiusStyle.TopRadius
-            height: parent.radius
-            color: parent.color
-            antialiasing: parent.antialiasing
-        }
+        radiusStyle: root.radiusStyle
 
         Text {
             id: axisTitleText

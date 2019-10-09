@@ -25,7 +25,9 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
 import Machinekit.Application 1.0
 import Machinekit.Application.Controls 1.0
-import "../style"
+
+import "../CetusStyle"
+import "../items"
 
 ColumnLayout {
     id: root
@@ -44,7 +46,7 @@ ColumnLayout {
 
     enabled: status.synced
     //height: 40
-    spacing: 5
+    spacing: 2
 
     Binding {
         target: root
@@ -77,22 +79,24 @@ ColumnLayout {
 
             text: root.axisNames[index]
 
-            indicator: Rectangle {
+            indicator: RoundedRectangle {
                 implicitWidth: radioButton.implicitWidth
                 implicitHeight: implicitWidth
-                radius: 6
-                border.width: radioButton.checked ? 2 : 1
+                radius: CetusStyle.control.radius
+                radiusStyle: index == 0 ? RoundedRectangle.TopRadius
+                                        : index == axisButonsRepeater.count-1 ? RoundedRectangle.BottomRadius
+                                                                              : RoundedRectangle.NoRadius
 
-                color: root.axisHomed[index] ? root.axisHomed[index].homed ? "forestgreen" : "steelblue" : "white";
-                border.color: CetusStyle.control.border.color//control.down ? "#17a81a" : "#21be2b"
+                //root.axisHomed[index] && root.axisHomed[index].homed
+                color: CetusStyle.control.background.colorWhen(radioButton.enabled, radioButton.pressed, radioButton.checked)
 
                 Text {
                     //id: axisTitleText
                     anchors.centerIn: parent
                     font.pixelSize: 30
+                    //font.family: CetusStyle.control.text.font.family
                     text: root.axisNames[index]
-                    color: CetusStyle.control.text.color
-                    font.bold: radioButton.checked
+                    color: CetusStyle.control.foreground.colorWhen(radioButton.enabled)
                 }
             }
 
@@ -102,9 +106,8 @@ ColumnLayout {
             }
 
             onCheckedChanged: {
-                if (checked) {
+                if (checked)
                     axisGroup.currentIndex = index;
-                }
             }
 
             Binding {

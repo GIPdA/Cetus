@@ -1,44 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>Cetus/Cetus.qml</file>
-        <file>Cetus/description.ini</file>
-        <file>Cetus/ApplicationMenuBar.qml</file>
-        <file>Cetus/ApplicationToolBar.qml</file>
-        <file>Cetus/DisplayPanel.qml</file>
-        <file>Cetus/MdiTab.qml</file>
-        <file>Cetus/ToggleSettingAction.qml</file>
-        <file>Cetus/PrinterTab.qml</file>
-        <file>Cetus/ErrorTab.qml</file>
-        <file>Cetus/AboutDialog.qml</file>
-        <file>Cetus/ApplicationToolBarMobile.qml</file>
-        <file>Cetus/DRO/DroLabelText.qml</file>
-        <file>Cetus/DRO/MultiText.qml</file>
-        <file>Cetus/DRO/StyledDro.qml</file>
         <file>Init.qml</file>
-        <file>Cetus/PreviewPanel.qml</file>
-        <file>Cetus/DroPanel.qml</file>
-        <file>Cetus/WebcamPanel.qml</file>
-        <file>Cetus/Singletons/Info.qml</file>
-        <file>Cetus/Singletons/qmldir</file>
-        <file>Cetus/StatusBar/ApplicationStatusBar.qml</file>
-        <file>Cetus/StatusBar/MachineStatusLabel.qml</file>
-        <file>Cetus/StatusBar/ToolStatusLabel.qml</file>
-        <file>Cetus/StatusBar/PositionOffsetLabel.qml</file>
-        <file>Cetus/Controls/Spacer.qml</file>
-        <file>Cetus/ManualTab/SpindleControls.qml</file>
-        <file>Cetus/ManualTab/CoolantControls.qml</file>
-        <file>Cetus/ManualTab/KeyboardJogControl.qml</file>
-        <file>Cetus/ManualTab/ManualTab.qml</file>
-        <file>Cetus/ManualTab/AxisControls.qml</file>
-        <file>Cetus/ConfigurationPanel/ConfigurationPanel.qml</file>
-        <file>Cetus/ConfigurationPanel/FeedrateControl.qml</file>
-        <file>Cetus/ConfigurationPanel/RapidrateControl.qml</file>
-        <file>Cetus/ConfigurationPanel/SpindlerateControl.qml</file>
-        <file>Cetus/ConfigurationPanel/MaximumVelocityControl.qml</file>
-        <file>Cetus/ConfigurationPanel/GantryConfigControl.qml</file>
-        <file>Cetus/StatusBar/FileNameLabel.qml</file>
-        <file>Cetus/Controls/CombinedJogVelocityHandler.qml</file>
     </qresource>
     <qresource prefix="/icons">
         <file alias="3d-coordinates-perspective">Cetus/icons/xhdpi/3d-coordinates-perspective.png</file>

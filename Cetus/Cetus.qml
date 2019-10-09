@@ -10,10 +10,12 @@ import Machinekit.Service 1.0
 import Machinekit.Application.Controls 2.0
 import Machinekit.PathView 1.0
 import Machinekit.VideoView 1.0
+
+import "CetusStyle"
 import "./StatusBar"
 import "./ManualTab"
 import "./ConfigurationPanel"
-import "./style"
+
 
 ServiceWindow {
     id: window
@@ -26,7 +28,7 @@ ServiceWindow {
     toolBar: applicationToolBarMobile.active ? applicationToolBarMobile : applicationToolBar
     menuBar: applicationMenuBar
 
-    color: CetusStyle.control.background.color
+    color: "#343434"
 
     /*property bool __synced: applicationCore.status.synced
     on__SyncedChanged: {
