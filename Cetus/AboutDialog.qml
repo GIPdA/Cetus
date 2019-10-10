@@ -38,19 +38,21 @@ Dialog {
             Label {
                 id: infoText
                 Layout.fillWidth: true
-                text: "Copyright 2014-2017 by Alexander Rössler<br>"
-                      + "This UI is based on <a href='https://github.com/qtquickvcp/qtquickvcp'>QtQuickVcp</a> Revision: " + Revision.name + "<br>"
+                text:   "Copyright 2019 by Benjamin Balga<br>"
+                      + "This UI is based on <a href='https://github.com/gipda/qtquickvcp'>QtQuickVcp</a> Revision: " + Revision.name + "<br>"
+                      //+ "This UI is based on <a href='https://github.com/qtquickvcp/qtquickvcp'>QtQuickVcp</a> Revision: " + Revision.name + "<br>"
                       + "<br>"
-                      + "Development sponsored by:<br>"
+                      + "Original work:<br>"
+                      + "Copyright 2014-2017 by Alexander Rössler<br>"
                       + "TheCoolTool GmbH (<a href='http://www.thecooltool.com/'>http://www.thecooltool.com/</a>)<br>"
                       + "<br>"
-                      + "<a href='https://github.com/qtquickvcp/Cetus'>Cetus</a> is licensed under the <a href='http://www.gnu.org/licenses/agpl-3.0.html'>GNU Affero General Public License, version 3</a>."
+                      + "<a href='https://github.com/gipda/Cetus'>Cetus</a> is licensed under the <a href='http://www.gnu.org/licenses/agpl-3.0.html'>GNU Affero General Public License, version 3</a>."
                 textFormat: Text.StyledText
                 elide: Text.ElideRight
                 onLinkActivated: Qt.openUrlExternally(link)
             }
 
-            RowLayout {
+            /*RowLayout {
                 Layout.fillWidth: true
 
                 Item {
@@ -62,7 +64,7 @@ Dialog {
                     text: qsTr("Close")
                     onClicked: aboutDialog.close()
                 }
-            }
+            }//*/
         }
     }
 
