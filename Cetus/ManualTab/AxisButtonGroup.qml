@@ -46,7 +46,7 @@ ColumnLayout {
 
     enabled: status.synced
     //height: 40
-    spacing: 2
+    spacing: 1
 
     Binding {
         target: root

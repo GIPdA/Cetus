@@ -11,7 +11,9 @@ import Machinekit.Application.Controls 2.0
 import Machinekit.PathView 1.0
 import Machinekit.VideoView 1.0
 
+//import CetusStyle 1.0
 import "CetusStyle"
+
 import "./StatusBar"
 import "./ManualTab"
 import "./ConfigurationPanel"
@@ -29,6 +31,7 @@ ServiceWindow {
     menuBar: applicationMenuBar
 
     color: "#343434"
+    //color: CetusStyle.controlColorWhen(true, false, true)
 
     /*property bool __synced: applicationCore.status.synced
     on__SyncedChanged: {
@@ -154,13 +157,24 @@ ServiceWindow {
         Item {
             id: toto
             width: 200
+            implicitWidth: 200
             Layout.margins: 5
             Layout.preferredWidth: 200
             Layout.maximumWidth: 200
             Layout.fillHeight: true
 
-            AxisControls {
+            /*AxisControls {
                 anchors.fill: parent
+            }//*/
+
+            ManualTab {
+                anchors.fill: parent
+            }
+
+            Shortcut {
+                id: manualShortcut
+                sequence: "F3"
+                onActivated: leftTabView.currentIndex = 0
             }
 
             /*ColumnLayout {

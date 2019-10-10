@@ -39,7 +39,7 @@ ColumnLayout {
     property int currentIndex: 0
     readonly property bool __ready: handler.settings.initialized
 
-    spacing: 2
+    spacing: 1
 
     function __setIndex(index) {
         if (!__ready) {

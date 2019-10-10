@@ -32,7 +32,8 @@ ApplicationObject {
             var velocity = value;
             if (proportional) {
                 velocity /= 100.0;
-                velocity *= maximumValue;
+                velocity *= (maximumValue-minimumValue)
+                velocity += minimumValue
             }
 
             forEachAxis(function(idx) {
@@ -104,8 +105,9 @@ ApplicationObject {
         var tmpValue = findMaxAxisJogVelocity()
         tmpValue = Math.max(Math.min(tmpValue, maximumValue), minimumValue); // clamp value
         if (proportional) {
-            tmpValue /= maximumValue;
+            tmpValue /= (maximumValue-minimumValue);
             tmpValue *= 100.0;
+            tmpValue += minimumValue
         }
 
         if (!((value-tmpValue) < 0.00001))

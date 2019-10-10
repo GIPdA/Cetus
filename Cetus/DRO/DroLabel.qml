@@ -5,6 +5,7 @@ Item {
     property bool rotated: false
     property int margin: 2
     property color textColor: "white"
+    property alias font: label.font
 
     id: root
     implicitWidth: (root.rotated ? label_size.implicitHeight : label_size.implicitWidth) + margin * 2

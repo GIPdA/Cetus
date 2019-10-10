@@ -6,28 +6,27 @@ import Machinekit.Application.Controls 1.0
 
 import "../ConfigurationPanel"
 
-Tab {
-    title: qsTr("Manual") + " [" + manualShortcut.sequence + "]"
+Item {
+    //title: qsTr("Manual") + " [" + manualShortcut.sequence + "]"
 
-    Item {
+    ColumnLayout {
         anchors.fill: parent
+        anchors.margins: 5
+        anchors.leftMargin: 10
+        spacing: 5
 
-        ColumnLayout {
-            anchors.fill: parent
-            anchors.margins: 5
+        AxisControls {}
 
-            AxisControls {}
+        SpeedsControls {}
 
-            CoolantControls {}
+        //CoolantControls {}
 
-            SpindleControls {}
+        SpindleControls {}
 
-            ConfigurationPanel {
-            }
+        //ConfigurationPanel {}
 
-            Item {
-                Layout.fillHeight: true
-            }
+        Item {
+            Layout.fillHeight: true
         }
     }
 }

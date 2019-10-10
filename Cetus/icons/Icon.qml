@@ -11,6 +11,7 @@ Item {
     //property color color: "white"
     property bool disabled: false
     property real margins: 0
+    property alias mirror: image.mirror
 
     property string iconPath: "../icons/xhdpi/"
 

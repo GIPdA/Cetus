@@ -1,6 +1,8 @@
 import QtQuick 2.4
 import QtQuick.Controls 2.5
 
+import "../CetusStyle"
+
 Button {
     id: control
 
@@ -9,6 +11,10 @@ Button {
     property alias color: backgroundItem.color
 
     property alias textColor: textItem.color
+
+    color: CetusStyle.control.background.colorWhen(enabled, down, false)
+    textColor: CetusStyle.control.foreground.colorWhen(enabled)
+    radius: CetusStyle.control.radius
 
     implicitHeight: 40
     implicitWidth: 80

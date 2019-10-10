@@ -21,13 +21,16 @@ Item {
         TopRadius,
         BottomRadius,
         LeftRadius,
-        RightRadius
+        RightRadius,
+        AllRadius
     }
-    property int radiusStyle: DroAxisRow.RadiusStyle.NoRadius
+    property int radiusStyle: DroAxisRow.NoRadius
 
-    Rectangle {
+    RoundedRectangle {
         anchors.fill: parent
+        anchors.leftMargin: radius+1
         radius: CetusStyle.control.radius
+        radiusStyle: root.radiusStyle
         color: root.backgroundColor
     }
 

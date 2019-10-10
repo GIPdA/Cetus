@@ -4,33 +4,39 @@ Rectangle {
     id: root
 
     enum RadiusStyle {
-        NoRadius,
-        TopRadius,
-        BottomRadius,
-        LeftRadius,
-        RightRadius
+        NoRadius = 0,
+        TopRadius = 1,
+        BottomRadius = 2,
+        LeftRadius = 4,
+        RightRadius = 8,
+        AllRadius = 0xF
     }
-    property int radiusStyle: RoundedRectangle.RadiusStyle.NoRadius
+    property int radiusStyle: RoundedRectangle.NoRadius
 
     QtObject {
         id: d
-        property bool noRadius: root.radiusStyle === RoundedRectangle.RadiusStyle.NoRadius
+        property bool noRadius: root.radiusStyle === RoundedRectangle.NoRadius
+        property bool allRadius: root.radiusStyle === RoundedRectangle.AllRadius
 
         function topLeftRadius() {
-            return root.radiusStyle === RoundedRectangle.RadiusStyle.TopRadius
-                || root.radiusStyle === RoundedRectangle.RadiusStyle.LeftRadius;
+            if (root.radiusStyle === RoundedRectangle.TopRadius) return true
+            if (root.radiusStyle === RoundedRectangle.LeftRadius) return true
+            return root.radiusStyle == (RoundedRectangle.TopRadius | RoundedRectangle.LeftRadius)
         }
         function topRightRadius() {
-            return root.radiusStyle === RoundedRectangle.RadiusStyle.TopRadius
-                || root.radiusStyle === RoundedRectangle.RadiusStyle.RightRadius;
+            if (root.radiusStyle === RoundedRectangle.TopRadius) return true
+            if (root.radiusStyle === RoundedRectangle.RightRadius) return true
+            return root.radiusStyle == (RoundedRectangle.TopRadius | RoundedRectangle.RightRadius)
         }
         function bottomLeftRadius() {
-            return root.radiusStyle === RoundedRectangle.RadiusStyle.BottomRadius
-                || root.radiusStyle === RoundedRectangle.RadiusStyle.LeftRadius;
+            if (root.radiusStyle === RoundedRectangle.BottomRadius) return true
+            if (root.radiusStyle === RoundedRectangle.LeftRadius) return true
+            return root.radiusStyle == (RoundedRectangle.BottomRadius | RoundedRectangle.LeftRadius)
         }
         function bottomRightRadius() {
-            return root.radiusStyle === RoundedRectangle.RadiusStyle.BottomRadius
-                || root.radiusStyle === RoundedRectangle.RadiusStyle.RightRadius;
+            if (root.radiusStyle === RoundedRectangle.BottomRadius) return true
+            if (root.radiusStyle === RoundedRectangle.RightRadius) return true
+            return root.radiusStyle == (RoundedRectangle.BottomRadius | RoundedRectangle.RightRadius)
         }
     }
 
@@ -40,7 +46,7 @@ Rectangle {
             top: parent.top
             left: parent.left
         }
-        visible: d.noRadius || !d.topLeftRadius()
+        visible: !d.allRadius && (d.noRadius || !d.topLeftRadius())
         height: parent.radius
         width: height
         color: parent.color
@@ -51,7 +57,7 @@ Rectangle {
             top: parent.top
             right: parent.right
         }
-        visible: d.noRadius || !d.topRightRadius()
+        visible: !d.allRadius && (d.noRadius || !d.topRightRadius())
         height: parent.radius
         width: height
         color: parent.color
@@ -63,7 +69,7 @@ Rectangle {
             bottom: parent.bottom
             left: parent.left
         }
-        visible: d.noRadius || !d.bottomLeftRadius()
+        visible: !d.allRadius && (d.noRadius || !d.bottomLeftRadius())
         height: parent.radius
         width: height
         color: parent.color
@@ -74,7 +80,7 @@ Rectangle {
             bottom: parent.bottom
             right: parent.right
         }
-        visible: d.noRadius || !d.bottomRightRadius()
+        visible: !d.allRadius && (d.noRadius || !d.bottomRightRadius())
         height: parent.radius
         width: height
         color: parent.color

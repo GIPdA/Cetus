@@ -10,7 +10,6 @@ AbstractDigitalReadOut {
     implicitWidth: layout.implicitWidth
     implicitHeight: layout.implicitHeight
     visible: _ready
-    offsetsVisible: true
 
     readonly property string units: helper.ready ? helper.distanceUnits + "/" + helper.timeUnits : "?"
 
@@ -213,9 +212,15 @@ AbstractDigitalReadOut {
                 axisName: modelData.name
                 axisColor: "#44D7B6"
 
-                radiusStyle: index == 0 ? DroAxisRow.RadiusStyle.TopRadius
-                                        : index === (extraDro.axes.length-1) ? DroAxisRow.RadiusStyle.BottomRadius
-                                                                             : DroAxisRow.RadiusStyle.NoRadius
+                radiusStyle: {
+                    if (extraDro.axes.length === 1)
+                        return DroAxisRow.AllRadius
+                    if (index == 0)
+                        return DroAxisRow.TopRadius
+                    if (index == (extraDro.axes.length-1))
+                        return DroAxisRow.BottomRadius
+                    return DroAxisRow.NoRadius
+                }
 
                 MultiText {
                     Layout.fillWidth: true
@@ -249,10 +254,11 @@ AbstractDigitalReadOut {
             }
         }
 
-        MultiAxisDro { // G5x / G92 offsets
+        MultiAxisDro { // G5x / G92 / Tools offsets
             id: offsetsDro
             Layout.fillWidth: true
             topMargin: 10
+            visible: root.offsetsVisible
 
             label: qsTr("Offsets")
 
