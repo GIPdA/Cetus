@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import QtQuick.Controls 1.1
+import QtQuick.Controls 2.4
 
 ApplicationWindow {
     id: applicationWindow
@@ -9,8 +9,9 @@ ApplicationWindow {
     width: 1200
     height: 1000
     title: connectionWindow.title
-    toolBar: connectionWindow.toolBar
-    statusBar: connectionWindow.statusBar
+    // TODO
+    //toolBar: connectionWindow.toolBar
+    //statusBar: connectionWindow.statusBar
     menuBar: connectionWindow.menuBar
 
     Init {
