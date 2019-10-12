@@ -110,7 +110,7 @@ ApplicationObject {
             tmpValue += minimumValue
         }
 
-        if (!((value-tmpValue) < 0.00001))
+        if (Math.abs(value-tmpValue) > 0.00001)
             value = tmpValue;
         else
             synced = true;
