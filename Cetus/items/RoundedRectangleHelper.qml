@@ -28,4 +28,33 @@ Item {
 
         }
     }
+
+    function updateRowRadiusStyle(item, noTop, noBottom) {
+        function radiusWhen(top, bottom, all=0) {
+            if (noTop && noBottom)
+                return all
+            if (noBottom)
+                return bottom
+            if (noTop)
+                return top
+            return all
+        }
+
+        var list = []
+        for (var i = 0; i < item.children.length; i++) {
+            var itemChildren = item.children[i]
+            if (itemChildren.radiusStyle !== undefined) {
+                itemChildren.radiusStyle = RoundedRectangle.NoRadius
+                if (itemChildren.visible)
+                    list.push(itemChildren)
+            }
+        }
+
+        if (list.length === 1) {
+            list[0].radiusStyle = radiusWhen(RoundedRectangle.TopRadius, RoundedRectangle.BottomRadius, RoundedRectangle.AllRadius)
+        } else if (list.length > 1) {
+            list[0].radiusStyle = radiusWhen(RoundedRectangle.TopRadius, RoundedRectangle.BottomRadius) | RoundedRectangle.LeftRadius
+            list[list.length-1].radiusStyle = radiusWhen(RoundedRectangle.TopRadius, RoundedRectangle.BottomRadius) | RoundedRectangle.RightRadius
+        }
+    }
 }

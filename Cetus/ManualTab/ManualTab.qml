@@ -19,7 +19,7 @@ Item {
 
         SpeedsControls {}
 
-        //CoolantControls {}
+        CoolantControls {}
 
         SpindleControls {}
 
