@@ -23,7 +23,7 @@ Item {
 
         SpindleControls {}
 
-        //ConfigurationPanel {}
+        //GantryConfigControl {}
 
         Item {
             Layout.fillHeight: true
