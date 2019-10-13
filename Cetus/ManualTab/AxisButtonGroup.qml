@@ -32,91 +32,57 @@ import "../items"
 ColumnLayout {
     id: root
 
-    property alias core: object.core
-    property alias status: object.status
-    property alias helper: object.helper
-    property alias currentIndex: axisGroup.currentIndex
     property int axis: 0
-    property var axisNames: helper.ready ? helper.axisNamesUpper : ["X", "Y", "Z"]
-    property var axisIndices: helper.ready ? helper.axisIndices : [0, 1, 2]
-    property var axisHomed: _ready ? status.motion.axis : [{"homed":false}, {"homed":false}, {"homed":false}, {"homed":false}]
+    property var axisNames: d.axisNames
+    property var axisIndices: d.axisIndices
 
-    readonly property bool _ready: status.synced
-    readonly property int __axes: axisNames.length
+    ApplicationObject {
+        id: d
+        readonly property var axisNames: helper.ready ? helper.axisNamesUpper : []
+        readonly property var axisIndices: helper.ready ? helper.axisIndices : []
+    }
 
-    enabled: status.synced
-    //height: 40
+    enabled: d.status.synced
     spacing: 1
 
-    Binding {
-        target: root
-        property: "axis"
-        value: root.axisIndices[root.currentIndex]
-    }
-
-    Binding {
-        target: root
-        property: "currentIndex"
-        value: root.axisIndices.indexOf(root.axis)
-    }
-
     ButtonGroup {
-        id: axisGroup
-        property int currentIndex: 0
-        buttons: axisButonsRepeater.children
+        id: buttonGroup
     }
 
     Repeater {
-        id: axisButonsRepeater
-        model: __axes
+        id: repeater
+        model: d.axisNames
 
-        RadioButton {
-            id: radioButton
+        RoundedButton {
+            id: control
             Layout.fillWidth: true
-            implicitWidth: 40
+            Layout.fillHeight: true
+            Layout.maximumHeight: 40
+            Layout.minimumHeight: 30
+            implicitWidth: implicitHeight
             implicitHeight: 40
-            ButtonGroup.group: axisGroup
 
-            text: root.axisNames[index]
+            ButtonGroup.group: buttonGroup
 
-            indicator: RoundedRectangle {
-                implicitWidth: radioButton.implicitWidth
-                implicitHeight: implicitWidth
-                radius: CetusStyle.control.radius
-                radiusStyle: index == 0 ? RoundedRectangle.TopRadius
-                                        : index == axisButonsRepeater.count-1 ? RoundedRectangle.BottomRadius
-                                                                              : RoundedRectangle.NoRadius
+            checkable: true
+            checked: index == root.axis
+            font.pixelSize: 22
 
-                //root.axisHomed[index] && root.axisHomed[index].homed
-                color: CetusStyle.control.background.colorWhen(radioButton.enabled, radioButton.pressed, radioButton.checked)
+            text: modelData
 
-                Text {
-                    //id: axisTitleText
-                    anchors.centerIn: parent
-                    font.pixelSize: 30
-                    //font.family: CetusStyle.control.text.font.family
-                    text: root.axisNames[index]
-                    color: CetusStyle.control.foreground.colorWhen(radioButton.enabled)
-                }
-            }
+            color: CetusStyle.control.background.colorWhen(control.enabled, control.down, control.checked)
+            textColor: CetusStyle.control.foreground.colorWhen(control.enabled)
 
-            contentItem: Item {
-                implicitWidth: radioButton.implicitWidth
-                implicitHeight: implicitWidth
-            }
+            radius: CetusStyle.control.radius
+            radiusStyle: index == 0 ? RoundedRectangle.TopRadius
+                                    : index == repeater.count-1 ? RoundedRectangle.BottomRadius
+                                                                : RoundedRectangle.NoRadius
 
             onCheckedChanged: {
                 if (checked)
-                    axisGroup.currentIndex = index;
-            }
-
-            Binding {
-                target: radioButton
-                property: "checked"
-                value: index === axisGroup.currentIndex
+                    root.axis = index;
             }
         }
-
     }
 
     ApplicationObject {
