@@ -3,15 +3,13 @@ import Machinekit.Application 1.0
 
 ApplicationObject {
     property int axisType: 1
-    readonly property string units: proportional ? "%" : distanceUnits + "/" + timeUnits
+    readonly property string units: distanceUnits + "/" + timeUnits
     readonly property string distanceUnits: helper.ready ? helper.distanceUnits : "mm"
     readonly property string timeUnits: helper.ready ? helper.timeUnits : "min"
-    readonly property double displayValue: proportional ? value : value * __timeFactor * __distanceFactor
+    readonly property double displayValue: value * __timeFactor * __distanceFactor
     property double value: 0
     property double minimumValue: 0
     property double maximumValue: 100
-    property bool proportional: false
-    property double minimumProportion: 0.0
     property bool enabled: __ready
     property bool synced: false
 
@@ -29,15 +27,8 @@ ApplicationObject {
 
     onValueChanged: {
         if (__ready && !__remoteUpdate) {
-            var velocity = value;
-            if (proportional) {
-                velocity /= 100.0;
-                velocity *= (maximumValue-minimumValue)
-                velocity += minimumValue
-            }
-
             forEachAxis(function(idx) {
-                settings.setValue("axis" + idx + ".jogVelocity", velocity);
+                settings.setValue("axis" + idx + ".jogVelocity", value);
             })
 
             synced = false;
@@ -48,12 +39,10 @@ ApplicationObject {
         if (__ready) {
             _update();
             settings.onValuesChanged.connect(_update);
-            status.onConfigChanged.connect(_update);
-            status.onMotionChanged.connect(_update);
+            //status.onConfigChanged.connect(_update)
         } else {
             settings.onValuesChanged.disconnect(_update);
-            status.onConfigChanged.disconnect(_update);
-            status.onMotionChanged.disconnect(_update);
+            //status.onConfigChanged.disconnect(_update);
             synced = false;
         }
     }
@@ -81,12 +70,21 @@ ApplicationObject {
             return _maxVel
         }
 
-        function findMaxAxisJogVelocity() {
-            var _maxVel = 0
+        function findMinMaxAxisJogVelocity() {
+            var combinedJogVel = {}
+            combinedJogVel.max = 0;
+            combinedJogVel.min = Infinity;
+
             forEachAxis(function(idx) {
-                _maxVel = Math.max(_maxVel, settings.value("axis" + idx + ".jogVelocity"));
+                var jogvel = settings.value("axis" + idx + ".jogVelocity")
+                combinedJogVel.max = Math.max(combinedJogVel.max, jogvel);
+                combinedJogVel.min = Math.min(combinedJogVel.min, jogvel);
             })
-            return _maxVel
+            return combinedJogVel
+        }
+
+        function clampToMinMax(v) {
+            return Math.max(Math.min(v, maximumValue), minimumValue)
         }
 
         __remoteUpdate = true;
@@ -99,19 +97,15 @@ ApplicationObject {
         } else {
             maximumValue = axisMaxVel;
         }
-        minimumProportion = (minimumValue / maximumValue) * 100.0;
 
-        // Use max jog velocity
-        var tmpValue = findMaxAxisJogVelocity()
-        tmpValue = Math.max(Math.min(tmpValue, maximumValue), minimumValue); // clamp value
-        if (proportional) {
-            tmpValue /= (maximumValue-minimumValue);
-            tmpValue *= 100.0;
-            tmpValue += minimumValue
-        }
+        // Compare with min/max jog velocities for all axis to avoid a binding loop
+        var combinedJogVel = findMinMaxAxisJogVelocity()
+        combinedJogVel.min = clampToMinMax(combinedJogVel.min)
+        combinedJogVel.max = clampToMinMax(combinedJogVel.max)
 
-        if (Math.abs(value-tmpValue) > 0.00001)
-            value = tmpValue;
+        if (   Math.abs(value-combinedJogVel.min) > 0.00001
+            && Math.abs(value-combinedJogVel.max) > 0.00001)
+            value = combinedJogVel.min;
         else
             synced = true;
 
