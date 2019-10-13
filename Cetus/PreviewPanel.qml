@@ -25,23 +25,6 @@ Item {
         Binding {
             target: pathView; property: "viewMode"; value: pathViewConfig.viewMode
         }
-
-        Rectangle {
-            id: droRect
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.margins: Screen.pixelDensity * 2
-            width: dro.width
-            height: dro.height
-            color: Qt.rgba(0, 0, 0, 0.7)
-            radius: Screen.pixelDensity * 3
-            border.width: 1
-            border.color: "black"
-            DigitalReadOut {
-                id: dro
-                textColor: "white"
-            }
-        }
     }
 
     CheckBox {
