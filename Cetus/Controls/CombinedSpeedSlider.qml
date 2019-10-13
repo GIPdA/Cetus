@@ -5,7 +5,7 @@ import Machinekit.Application 1.0
 SpeedSlider {
     id: root
 
-    implicitHeight: 50
+    implicitHeight: 30
 
     from: handler.minimumValue
     to: handler.maximumValue

@@ -35,6 +35,7 @@ ColumnLayout {
         Layout.fillWidth: true
         Layout.fillHeight: true
         Layout.preferredHeight: 50
+        Layout.minimumHeight: 30
         Layout.maximumHeight: 50
         spacing: 1
 

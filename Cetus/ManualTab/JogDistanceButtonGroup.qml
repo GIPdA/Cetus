@@ -91,6 +91,8 @@ ColumnLayout {
             id: control
             Layout.fillWidth: true
             Layout.fillHeight: true
+            Layout.maximumHeight: 30
+            Layout.minimumHeight: 20
 
             ButtonGroup.group: buttonGroup
 

@@ -12,6 +12,12 @@ ColumnLayout {
     id: root
     spacing: 5
 
+    QtObject {
+        id: d
+        readonly property int minItemHeight: 30
+        readonly property int maxItemHeight: 50
+    }
+
     Item {
         //visible: false
         DroLabel {
@@ -23,9 +29,8 @@ ColumnLayout {
     }
 
     RowLayout {
-        Layout.fillWidth: true
-        Layout.fillHeight: false
-        Layout.maximumWidth: root.width
+        Layout.maximumHeight: 80
+        Layout.minimumHeight: 50
         spacing: 2
 
         JogButton {
@@ -33,6 +38,7 @@ ColumnLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
             implicitHeight: 80
+            implicitWidth: implicitHeight
 
             direction: -1
             distance: jogCombo.distance
@@ -66,6 +72,7 @@ ColumnLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
             implicitHeight: 80
+            implicitWidth: implicitHeight
 
             direction: 1
             distance: jogCombo.distance
@@ -101,19 +108,16 @@ ColumnLayout {
             onIncrement: incrementButton._toggle(enabled)
             onDecrement: decrementButton._toggle(enabled)
             onSelectIncrement: {
-                if (jogCombo.currentIndex === 0) {
+                if (jogCombo.currentIndex === 0)
                     jogCombo.currentIndex = index;
-                }
             }
         }
 
     }
 
     RowLayout {
-        Layout.fillWidth: true
-        Layout.fillHeight: false
         spacing: 25
-        Layout.maximumHeight: axisRadioGroup.height
+        Layout.maximumHeight: jogCombo.implicitHeight
 
         AxisButtonGroup {
             id: axisRadioGroup
@@ -132,9 +136,6 @@ ColumnLayout {
 
 
     ColumnLayout {
-        Layout.fillWidth: true
-        Layout.fillHeight: false
-        //Layout.maximumWidth: root.width
         spacing: 1
 
         onChildrenChanged: RoundedRectangleHelper.updateRadiusStyle(this)
@@ -143,6 +144,9 @@ ColumnLayout {
         RoundedButton {
             id: homeAllAxesButton
             Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumHeight: d.maxItemHeight
+            Layout.minimumHeight: d.minItemHeight
             action: HomeAxisAction { id: homeAxisAction; axis: -1 }
             visible: homeAxisAction.homeAllAxesHelper.homingOrderDefined
 
@@ -153,6 +157,9 @@ ColumnLayout {
         RoundedButton {
             id: homeAxisButton
             Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumHeight: d.maxItemHeight
+            Layout.minimumHeight: d.minItemHeight
             action: HomeAxisAction { axis: axisRadioGroup.axis }
             visible: !homeAllAxesButton.visible
 
@@ -162,14 +169,13 @@ ColumnLayout {
 
         RoundedButton {
             Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumHeight: d.maxItemHeight
+            Layout.minimumHeight: d.minItemHeight
             action: TouchOffAction { touchOffDialog: touchOffDialog }
 
             font.pixelSize: 22
             font.italic: !enabled
-        }
-
-        Item {
-            Layout.fillHeight: true
         }
 
         TouchOffDialog {

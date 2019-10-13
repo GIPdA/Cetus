@@ -19,6 +19,8 @@ ColumnLayout {
     ApplicationObject {
         id: d
         readonly property bool spindleOverrideVisible: status.synced && status.ui.spindleOverrideVisible
+        readonly property int minItemHeight: 30
+        readonly property int maxItemHeight: 50
     }
 
     Item {
@@ -33,8 +35,9 @@ ColumnLayout {
 
     CombinedSpeedSlider {
         Layout.fillWidth: true
-        implicitHeight: 50
-        proportional: false
+        Layout.fillHeight: true
+        Layout.maximumHeight: d.maxItemHeight
+        Layout.minimumHeight: d.minItemHeight
 
         labelText: qsTr("Jog Velocity")
         valueText: displayValue.toFixed(1) + " " + units
@@ -44,7 +47,9 @@ ColumnLayout {
 
     CombinedSpeedSlider {
         Layout.fillWidth: true
-        implicitHeight: 50
+        Layout.fillHeight: true
+        Layout.maximumHeight: d.maxItemHeight
+        Layout.minimumHeight: d.minItemHeight
         proportional: true
 
         labelText: qsTr("Feed Override")
@@ -55,7 +60,9 @@ ColumnLayout {
 
     CombinedSpeedSlider {
         Layout.fillWidth: true
-        implicitHeight: 50
+        Layout.fillHeight: true
+        Layout.maximumHeight: d.maxItemHeight
+        Layout.minimumHeight: d.minItemHeight
         proportional: true
 
         labelText: qsTr("Rapid Override")
@@ -66,7 +73,9 @@ ColumnLayout {
 
     CombinedSpeedSlider {
         Layout.fillWidth: true
-        implicitHeight: 50
+        Layout.fillHeight: true
+        Layout.maximumHeight: d.maxItemHeight
+        Layout.minimumHeight: d.minItemHeight
         proportional: false
 
         labelText: qsTr("Max Velocity")
@@ -77,8 +86,10 @@ ColumnLayout {
 
     CombinedSpeedSlider {
         Layout.fillWidth: true
+        Layout.fillHeight: true
+        Layout.maximumHeight: d.maxItemHeight
+        Layout.minimumHeight: d.minItemHeight
         visible: d.spindleOverrideVisible
-        implicitHeight: 50
         proportional: true
 
         labelText: qsTr("Spindle Override")

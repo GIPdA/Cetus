@@ -16,7 +16,7 @@ Button {
     textColor: CetusStyle.control.foreground.colorWhen(enabled)
     radius: CetusStyle.control.radius
 
-    implicitHeight: 40
+    implicitHeight: backgroundItem.implicitHeight+topPadding+bottomPadding
     implicitWidth: 80
 
     contentItem: Text {

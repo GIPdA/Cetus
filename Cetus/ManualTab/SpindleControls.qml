@@ -40,6 +40,7 @@ ColumnLayout {
         Layout.fillHeight: true
         Layout.preferredHeight: 50
         Layout.maximumHeight: 50
+        Layout.minimumHeight: 30
         spacing: 1
 
         visible: d.spindleCcwVisible || d.spindleStopVisible || d.spindleCwVisible
@@ -74,6 +75,7 @@ ColumnLayout {
 
                 Text {
                     Layout.alignment: Qt.AlignHCenter
+                    visible: ccwButton.height > 40
                     text: ccwButton.action.text
                     font.pixelSize: 16
                     font.weight: Font.Medium
@@ -106,6 +108,7 @@ ColumnLayout {
 
                 Text {
                     Layout.alignment: Qt.AlignHCenter
+                    visible: startStopButton.height > 40
                     text: startStopButton.action.text
                     font.pixelSize: 16
                     font.weight: Font.Medium
@@ -137,6 +140,7 @@ ColumnLayout {
 
                 Text {
                     Layout.alignment: Qt.AlignHCenter
+                    visible: cwButton.height > 40
                     text: cwButton.action.text
                     font.pixelSize: 16
                     font.weight: Font.Medium
@@ -151,8 +155,9 @@ ColumnLayout {
         id: speedsLayout
         Layout.fillWidth: true
         Layout.fillHeight: true
-        Layout.preferredHeight: 60
-        Layout.maximumHeight: 60
+        Layout.preferredHeight: 50
+        Layout.maximumHeight: 50
+        Layout.minimumHeight: 30
         spacing: 1
 
         visible: d.spindleMinusVisible || d.spindlePlusVisible

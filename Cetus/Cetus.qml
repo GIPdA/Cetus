@@ -31,7 +31,6 @@ ServiceWindow {
     menuBar: applicationMenuBar
 
     color: "#343434"
-    //color: CetusStyle.controlColorWhen(true, false, true)
 
     /*property bool __synced: applicationCore.status.synced
     on__SyncedChanged: {
@@ -145,11 +144,13 @@ ServiceWindow {
             Layout.fillHeight: true
 
             // Preview
-            Rectangle {
+            /*Item {
                 anchors.fill: parent
-                color: "steelblue"
-            }
-            /*PreviewPanel {
+                Text {
+                    text: "Preview"
+                }
+            }//*/
+            PreviewPanel {
                 anchors.fill: parent
             }//*/
         }
@@ -163,9 +164,6 @@ ServiceWindow {
             Layout.maximumWidth: 200
             Layout.fillHeight: true
 
-            /*AxisControls {
-                anchors.fill: parent
-            }//*/
 
             ManualTab {
                 anchors.fill: parent
@@ -176,24 +174,6 @@ ServiceWindow {
                 sequence: "F3"
                 onActivated: leftTabView.currentIndex = 0
             }
-
-            /*ColumnLayout {
-                anchors.fill: parent
-                anchors.margins: 5
-
-                AxisControls {}
-
-                /*CoolantControls {}
-
-                SpindleControls {}
-
-                ConfigurationPanel {
-                }// * /
-
-                Item {
-                    Layout.fillHeight: true
-                }
-            }//*/
 
             /*QQ1.TabView {
                 id: leftTabView
@@ -218,34 +198,6 @@ ServiceWindow {
 
 
     }
-
-
-
-
-
-
-    /*TabView {
-        id: centerTabView
-        anchors.left: leftTabView.right
-        anchors.right: rightTabView.left
-        anchors.top: parent.top
-        anchors.bottom: sourceView.top
-
-        property bool active: droTab.status === Loader.Ready
-        property bool loaded: false
-
-        Tab {
-            id: droTab
-            title: qsTr("DRO")
-            DroPanel {}
-        }
-        Tab {
-            id: previewTab
-            title: qsTr("Preview")
-            PreviewPanel { }
-        }
-
-    }//*/
 
     /*DisplayPanel {
         id: rightTabView
