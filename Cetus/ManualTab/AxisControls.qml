@@ -28,6 +28,7 @@ ColumnLayout {
         }
     }
 
+    // Jog + / -
     RowLayout {
         Layout.maximumHeight: 80
         Layout.minimumHeight: 50
@@ -115,6 +116,7 @@ ColumnLayout {
 
     }
 
+    // Jog axis + increments
     RowLayout {
         spacing: 25
         Layout.maximumHeight: jogCombo.implicitHeight
@@ -134,7 +136,7 @@ ColumnLayout {
 
     }
 
-
+    // Buttons
     ColumnLayout {
         spacing: 1
 
@@ -161,7 +163,19 @@ ColumnLayout {
             Layout.maximumHeight: d.maxItemHeight
             Layout.minimumHeight: d.minItemHeight
             action: HomeAxisAction { axis: axisRadioGroup.axis }
-            visible: !homeAllAxesButton.visible
+            //visible: !homeAllAxesButton.visible
+
+            font.pixelSize: 22
+            font.italic: !enabled
+        }
+
+        RoundedButton {
+            id: unhomeAxisButton
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumHeight: d.maxItemHeight
+            Layout.minimumHeight: d.minItemHeight
+            action: UnhomeAxisAction { axis: axisRadioGroup.axis }
 
             font.pixelSize: 22
             font.italic: !enabled
@@ -185,7 +199,4 @@ ColumnLayout {
         }
     }
 
-    /*Item {
-        Layout.fillHeight: true
-    }//*/
 }
