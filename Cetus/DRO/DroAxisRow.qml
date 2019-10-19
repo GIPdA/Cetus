@@ -17,12 +17,12 @@ Item {
     default property alias content: contentLayout.data
 
     enum RadiusStyle {
-        NoRadius,
-        TopRadius,
-        BottomRadius,
-        LeftRadius,
-        RightRadius,
-        AllRadius
+        NoRadius = 0,
+        TopRadius = 1,
+        BottomRadius = 2,
+        LeftRadius = 4,
+        RightRadius = 8,
+        AllRadius = 0xF
     }
     property int radiusStyle: DroAxisRow.NoRadius
 
