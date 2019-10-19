@@ -83,29 +83,29 @@ AbstractDigitalReadOut {
 
             label: qsTr("DRO")
 
-            axes: {
-                var list = []
-                for (var i = 0; i < root.axes; ++i) {
-                    var item = {}
-                    item.name = root.axisNames[i]
-                    item.homed = (i < root.axisHomed.length) && root.axisHomed[root._axisIndices[i]].homed
-                    item.position = Number(root.position[root._axisNames[i]])
-                    item.distanceToGo = Number(root.dtg[root._axisNames[i]])
-                    list.push(item)
-                }
+            axes: PropertyMapModel {
+                Component.onCompleted: {
+                    function addAxis(i) { // var item can't be "reused", so to use loops we must use a function to create a row
+                        var item = append()//appendWithProperties(["name", "homed", "position", "distanceToGo"])
+                        item.name =         root.axisNames[i]
+                        item.homed =        Qt.binding(function() { return (i < root.axisHomed.length) && root.axisHomed[root._axisIndices[i]].homed })
+                        item.position =     Qt.binding(function() { return Number(root.position[root._axisNames[i]]) })
+                        item.distanceToGo = Qt.binding(function() { return Number(root.dtg[root._axisNames[i]]) })
+                    }
+                    for (var i = 0; i < root.axes; ++i) {
+                        addAxis(i)
+                    }
 
-                if (root.lathe) {
-                    // Lathe mode, X is replaced by Rad, Dia is inserted juste after
-                    item = list[0]
-                    item.name = qsTr("Rad")
+                    if (root.lathe) {
+                        // Lathe mode, X is replaced by Rad, Dia is inserted juste after
+                        at(0).name = qsTr("Rad")
 
-                    item = Object.assign({}, item) // copy item
-                    item.name = qsTr("Dia")
-                    item.position = Number(root.position['x']) * 2.0
-                    item.distanceToGo = Number(root.dtg['x']) * 2.0
-                    list.splice(1, 0, item)
+                        var item = insertAt(1)
+                        item.name =         qsTr("Dia")
+                        item.position =     Qt.binding(function() { return Number(root.position['x']) * 2.0 })
+                        item.distanceToGo = Qt.binding(function() { return Number(root.dtg['x']) * 2.0 })
+                    }
                 }
-                return list
             }
 
             axesDelegate: DroAxisRow {
@@ -114,9 +114,9 @@ AbstractDigitalReadOut {
                 axisName: modelData.name
                 axisColor: "#0096EC"
 
-                radiusStyle: index == 0 ? DroAxisRow.RadiusStyle.TopRadius
-                                        : index === (mainDro.axes.length-1) ? DroAxisRow.RadiusStyle.BottomRadius
-                                                                            : DroAxisRow.RadiusStyle.NoRadius
+                radiusStyle: index == 0 ? DroAxisRow.TopRadius
+                                        : index === (mainDro.axes.count-1) ? DroAxisRow.BottomRadius
+                                                                            : DroAxisRow.NoRadius
 
                 MultiText { // Position
                     Layout.fillWidth: true
@@ -177,33 +177,43 @@ AbstractDigitalReadOut {
 
             label: qsTr("Extra")
 
-            axes: {
-                var list = []
-                var item
+            Connections {
+                target: root
+                onVelocityVisibleChanged: extraDroModel.makeModel()
+                onDistanceToGoVisibleChanged: extraDroModel.makeModel()
+                onSpindleSpeedVisibleChanged: extraDroModel.makeModel()
+            }
 
-                if (root.velocityVisible) {
-                    item = {}
-                    item.name = qsTr("Vel")
-                    item.value = root.velocity
-                    item.units = root.units
-                    list.push(item)
+            axes: PropertyMapModel {
+                id: extraDroModel
+                function makeModel() {
+                    clear()
+                    if (root.velocityVisible) {
+                        var velocityItem = beginAppend()
+                        velocityItem.name = qsTr("Vel")
+                        velocityItem.value = Qt.binding(function() { return root.velocity+0 })
+                        velocityItem.units = root.units
+                        endAppend()
+                    }
+
+                    if (root.distanceToGoVisible) {
+                        var dtgItem = beginAppend()
+                        dtgItem.name = qsTr("DTG")
+                        dtgItem.value = Qt.binding(function() { return root.distanceToGo+0 })
+                        dtgItem.units = ""
+                        endAppend()
+                    }
+
+                    if (root.spindleSpeedVisible) {
+                        var spindleSpeedItem = beginAppend()
+                        spindleSpeedItem.name = Qt.binding(function() { return qsTr("S%1").arg(root.spindleDirection === 1 ? "⟳" : (root.spindleDirection === -1 ? "⟲" : "")) })
+                        spindleSpeedItem.value = Qt.binding(function() { return root.spindleSpeed })
+                        spindleSpeedItem.units = ""
+                        endAppend()
+                    }
                 }
 
-                if (root.distanceToGoVisible) {
-                    item = {}
-                    item.name = qsTr("DTG")
-                    item.value = root.distanceToGo
-                    list.push(item);
-                }
-
-                if (root.spindleSpeedVisible) {
-                    item = {}
-                    item.name = qsTr("S%1").arg(root.spindleDirection === 1 ? "⟳" : (root.spindleDirection === -1 ? "⟲" : ""))
-                    item.value = root.spindleSpeed
-                    list.push(item)
-                }
-
-                return list
+                Component.onCompleted: makeModel()
             }
 
             axesDelegate: DroAxisRow {
@@ -213,11 +223,11 @@ AbstractDigitalReadOut {
                 axisColor: "#44D7B6"
 
                 radiusStyle: {
-                    if (extraDro.axes.length === 1)
+                    if (extraDro.axes.count === 1)
                         return DroAxisRow.AllRadius
                     if (index == 0)
                         return DroAxisRow.TopRadius
-                    if (index == (extraDro.axes.length-1))
+                    if (index == (extraDro.axes.count-1))
                         return DroAxisRow.BottomRadius
                     return DroAxisRow.NoRadius
                 }
@@ -241,7 +251,7 @@ AbstractDigitalReadOut {
                         anchors.bottom: parent.bottom
                         anchors.bottomMargin: 5
                         color: "white"
-                        text: modelData.units !== undefined ? modelData.units : ""
+                        text: modelData.units
                         font.family: "Monospace"
                         font.pixelSize: Math.min(parent.height*0.5, parent.width / 6)
                     }
@@ -262,18 +272,20 @@ AbstractDigitalReadOut {
 
             label: qsTr("Offsets")
 
-            axes: {
-                var list = []
-                for (var i = 0; i < root.axes; ++i) {
-                    var item = {}
-                    item.name = root.axisNames[i]
-                    item.homed = (i < root.axisHomed.length) && root.axisHomed[root._axisIndices[i]].homed
-                    item.g5xOffset = Number(root.g5xOffset[root._axisNames[i]])
-                    item.g92Offset = Number(root.g92Offset[root._axisNames[i]])
-                    item.toolOffset = Number(root.toolOffset[root._axisNames[i]])
-                    list.push(item)
+            axes: PropertyMapModel {
+                Component.onCompleted: {
+                    function addAxis(i) {
+                        var item = append()
+                        item.name =         root.axisNames[i]
+                        item.homed =        Qt.binding(function() { return (i < root.axisHomed.length) && root.axisHomed[root._axisIndices[i]].homed })
+                        item.g5xOffset =    Qt.binding(function() { return Number(root.g5xOffset[root._axisNames[i]]) })
+                        item.g92Offset =    Qt.binding(function() { return Number(root.g92Offset[root._axisNames[i]]) })
+                        item.toolOffset =   Qt.binding(function() { return Number(root.toolOffset[root._axisNames[i]]) })
+                    }
+                    for (var i = 0; i < root.axes; ++i) {
+                        addAxis(i)
+                    }
                 }
-                return list
             }
 
             axesDelegate: DroAxisRow {
@@ -282,9 +294,9 @@ AbstractDigitalReadOut {
                 axisName: modelData.name
                 axisColor: "#D60000"
 
-                radiusStyle: index == 0 ? DroAxisRow.RadiusStyle.TopRadius
-                                        : index === (offsetsDro.axes.length-1) ? DroAxisRow.RadiusStyle.BottomRadius
-                                                                            : DroAxisRow.RadiusStyle.NoRadius
+                radiusStyle: index == 0 ? DroAxisRow.TopRadius
+                                        : index === (offsetsDro.axes.count-1) ? DroAxisRow.BottomRadius
+                                                                            : DroAxisRow.NoRadius
 
                 MultiText { // G5x Offset (current active offset)
                     Layout.fillWidth: true
@@ -353,7 +365,7 @@ AbstractDigitalReadOut {
             }
         }
 
-        MultiAxisDro { // Tool offsets
+        MultiAxisDro { // Tool offsets, splitted from offsets
             id: toolOffsetsDro
             Layout.fillWidth: true
             topMargin: 10
@@ -361,16 +373,18 @@ AbstractDigitalReadOut {
 
             label: qsTr("Tool Offsets")
 
-            axes: {
-                var list = []
-                for (var i = 0; i < root.axes; ++i) {
-                    var item = {}
-                    item.name = root.axisNames[i]
-                    item.homed = (i < root.axisHomed.length) && root.axisHomed[root._axisIndices[i]].homed
-                    item.toolOffset = Number(root.toolOffset[root._axisNames[i]])
-                    list.push(item)
+            axes: PropertyMapModel {
+                Component.onCompleted: {
+                    function addAxis(i) {
+                        var item = append()
+                        item.name =         root.axisNames[i]
+                        item.homed =        Qt.binding(function() { return (i < root.axisHomed.length) && root.axisHomed[root._axisIndices[i]].homed })
+                        item.toolOffset =   Qt.binding(function() { return Number(root.toolOffset[root._axisNames[i]]) })
+                    }
+                    for (var i = 0; i < root.axes; ++i) {
+                        addAxis(i)
+                    }
                 }
-                return list
             }
 
             axesDelegate: DroAxisRow {
@@ -379,9 +393,9 @@ AbstractDigitalReadOut {
                 axisName: modelData.name
                 axisColor: "#84D600"
 
-                radiusStyle: index == 0 ? DroAxisRow.RadiusStyle.TopRadius
-                                        : index === (toolOffsetsDro.axes.length-1) ? DroAxisRow.RadiusStyle.BottomRadius
-                                                                            : DroAxisRow.RadiusStyle.NoRadius
+                radiusStyle: index == 0 ? DroAxisRow.TopRadius
+                                        : index === (toolOffsetsDro.axes.count-1) ? DroAxisRow.BottomRadius
+                                                                            : DroAxisRow.NoRadius
 
                 MultiText { // Tool offset
                     Layout.fillWidth: true
