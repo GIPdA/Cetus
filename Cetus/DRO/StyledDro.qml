@@ -13,57 +13,6 @@ AbstractDigitalReadOut {
 
     readonly property string units: helper.ready ? helper.distanceUnits + "/" + helper.timeUnits : "?"
 
-    /*function serialize(object, maxDepth) {
-        function _processObject(object, maxDepth, level) {
-            var output = []
-            var pad = "  "
-            if (maxDepth === undefined) {
-                maxDepth = -1
-            }
-            if (level === undefined) {
-                level = 0
-            }
-            var padding = new Array(level + 1).join(pad)
-
-            output.push((Array.isArray(object) ? "[" : "{"))
-            var fields = []
-            for (var key in object) {
-                if (typeof object[key] == "function")
-                    continue
-                var keyText = Array.isArray(object) ? "" : ("\"" + key + "\": ")
-                if (typeof (object[key]) == "object" && key !== "parent" && maxDepth !== 0) {
-                    var res = _processObject(object[key], maxDepth > 0 ? maxDepth - 1 : -1, level + 1)
-                    fields.push(padding + pad + keyText + res)
-                } else {
-                    fields.push(padding + pad + keyText + "\"" + object[key] + "\"")
-                }
-            }
-            output.push(fields.join(",\n"))
-            output.push(padding + (Array.isArray(object) ? "]" : "}"))
-
-            return output.join("\n")
-        }
-
-        return _processObject(object, maxDepth)
-    }
-
-    property bool ready: helper.ready
-    onReadyChanged: {
-        if (ready) {
-            console.log(">> " + "helper")
-            print(serialize(helper))
-            console.log("<<")
-        }
-    }
-    property bool synced: status.synced
-    onSyncedChanged: {
-        if (synced) {
-            console.log(">> " + "status")
-            print(serialize(status))
-            console.log("<<")
-        }
-    }//*/
-
     Rectangle {
         anchors.fill: parent
         opacity: 0
@@ -79,7 +28,8 @@ AbstractDigitalReadOut {
         MultiAxisDro { // Main DRO
             id: mainDro
             Layout.fillWidth: true
-            topMargin: 25
+            Layout.fillHeight: true
+            Layout.minimumHeight: minimumImplicitHeight
 
             label: qsTr("DRO")
 
@@ -110,7 +60,10 @@ AbstractDigitalReadOut {
 
             axesDelegate: DroAxisRow {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 40
+                Layout.fillHeight: true
+                Layout.preferredHeight: mainDro.axisHeight
+                Layout.maximumHeight: mainDro.axisHeight
+                Layout.minimumHeight: mainDro.axisHeight
                 axisName: modelData.name
                 axisColor: "#0096EC"
 
@@ -173,6 +126,8 @@ AbstractDigitalReadOut {
         MultiAxisDro { // Extra
             id: extraDro
             Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.minimumHeight: minimumImplicitHeight
             //visible: !root.offsetsVisible && (axes.length > 0)
 
             label: qsTr("Extra")
@@ -218,7 +173,10 @@ AbstractDigitalReadOut {
 
             axesDelegate: DroAxisRow {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 40
+                Layout.fillHeight: true
+                Layout.preferredHeight: mainDro.axisHeight
+                Layout.maximumHeight: mainDro.axisHeight
+                Layout.minimumHeight: mainDro.axisHeight
                 axisName: modelData.name
                 axisColor: "#44D7B6"
 
@@ -249,7 +207,7 @@ AbstractDigitalReadOut {
                         id: unitsText
                         //anchors.verticalCenter: parent.verticalCenter
                         anchors.bottom: parent.bottom
-                        anchors.bottomMargin: 5
+                        anchors.bottomMargin: parent.height*0.15
                         color: "white"
                         text: modelData.units
                         font.family: "Monospace"
@@ -258,6 +216,7 @@ AbstractDigitalReadOut {
                 }
 
                 Item {
+                    Layout.fillHeight: true
                     width: 32
                     height: 32
                 }
@@ -267,6 +226,8 @@ AbstractDigitalReadOut {
         MultiAxisDro { // G5x / G92 / Tools offsets
             id: offsetsDro
             Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.minimumHeight: minimumImplicitHeight
             topMargin: 10
             visible: root.offsetsVisible
 
@@ -290,7 +251,10 @@ AbstractDigitalReadOut {
 
             axesDelegate: DroAxisRow {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 40
+                Layout.fillHeight: true
+                Layout.preferredHeight: mainDro.axisHeight
+                Layout.maximumHeight: mainDro.axisHeight
+                Layout.minimumHeight: mainDro.axisHeight
                 axisName: modelData.name
                 axisColor: "#D60000"
 
@@ -365,9 +329,11 @@ AbstractDigitalReadOut {
             }
         }
 
-        MultiAxisDro { // Tool offsets, splitted from offsets
+        /*MultiAxisDro { // Tool offsets, splitted from offsets
             id: toolOffsetsDro
             Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.minimumHeight: minimumImplicitHeight
             topMargin: 10
             visible: false//root.offsetsVisible
 
@@ -389,7 +355,10 @@ AbstractDigitalReadOut {
 
             axesDelegate: DroAxisRow {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 40
+                Layout.fillHeight: true
+                Layout.preferredHeight: mainDro.axisHeight
+                Layout.maximumHeight: mainDro.axisHeight
+                Layout.minimumHeight: mainDro.axisHeight
                 axisName: modelData.name
                 axisColor: "#84D600"
 
@@ -418,11 +387,10 @@ AbstractDigitalReadOut {
                     }
                 }
             }
-        }
+        }//*/
 
         Item {
             Layout.fillHeight: true
-            Layout.fillWidth: true
         }
     } // layout
 

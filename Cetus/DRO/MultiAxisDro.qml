@@ -3,14 +3,26 @@ import QtQuick.Layouts 1.12
 
 Item {
     id: root
-    implicitHeight: droColumn.implicitHeight + topMargin + margins*2
+    implicitHeight: repeater.count*implicitAxisHeight + topMargin + margins*2
     implicitWidth: droColumn.implicitWidth + groupLabel.implicitWidth + margins*2
 
     property alias axes: repeater.model
     property alias axesDelegate: repeater.delegate
+    property int implicitAxisHeight: 40
+    property int minimumAxisHeight: 20
+    property int maximumAxisHeight: 40
+    readonly property int axisHeight: d.clampAxisHeight(Math.floor(droColumn.height/repeater.count))
+    readonly property int minimumImplicitHeight: repeater.count*minimumAxisHeight
     property alias label: groupLabel.text
     property int topMargin: 0
     property int margins: 0
+
+    QtObject {
+        id: d
+        function clampAxisHeight(h) {
+            return Math.max(minimumAxisHeight, Math.min(h, maximumAxisHeight))
+        }
+    }
 
     Rectangle {
         anchors.fill: parent
@@ -59,7 +71,7 @@ Item {
 
         ColumnLayout {
             id: internalContentLayout
-            Layout.fillHeight: true
+            //Layout.fillHeight: true
             Layout.fillWidth: true
             spacing: 1
             Repeater {
