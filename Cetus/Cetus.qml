@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick.Controls 2.13
 //import QtQuick.Controls 1.4 as QQ1
 import QtQuick.Layouts 1.12
 import QtQuick.Dialogs 1.3
@@ -17,7 +17,7 @@ import "CetusStyle"
 import "./StatusBar"
 import "./ManualTab"
 import "./ConfigurationPanel"
-
+import "items"
 
 ServiceWindow {
     id: window
@@ -103,109 +103,118 @@ ServiceWindow {
         property string viewMode: status.synced && status.config.lathe ? "Lathe" : "Perspective"
     }
 
-    SourceView {
-        id: sourceView
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        height: parent.height * 0.25
-    }
-
-
-    RowLayout {
+    SplitView {
+        id: splitView
         anchors.fill: parent
+        orientation: Qt.Vertical
 
-        Item {
-            width: 500
-            Layout.preferredWidth: 500
-            Layout.fillHeight: true
-
-            ColumnLayout {
-                anchors.fill: parent
-
-                DroPanel {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    //anchors.fill: parent
-                }
-
-                /*/JogStick {
-                    id: jogStick
-                }//*/
-
-                /*Item {
-                    Layout.fillHeight: true
-                }//*/
-            }
+        handle: Rectangle {
+            implicitHeight: 5
+            color: "#707070"
         }
 
-        Item {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+        RowLayout {
+            SplitView.fillWidth: true
+            SplitView.fillHeight: true
 
-            // Preview
-            /*Item {
-                anchors.fill: parent
-                Text {
-                    text: "Preview"
+            Item { // DRO
+                implicitWidth: 500
+                Layout.preferredWidth: 500
+                Layout.fillHeight: true
+
+                ColumnLayout {
+                    anchors.fill: parent
+
+                    DroPanel {
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                    }
+
+                    /*/JogStick {
+                        id: jogStick
+                    }//*/
+                    /*Item {
+                        Layout.fillHeight: true
+                    }//*/
                 }
-            }//*/
-            PreviewPanel {
-                anchors.fill: parent
-            }//*/
-        }
-
-        Item {
-            id: toto
-            width: 200
-            implicitWidth: 200
-            Layout.margins: 5
-            Layout.preferredWidth: 200
-            Layout.maximumWidth: 200
-            Layout.fillHeight: true
-
-
-            ManualTab {
-                anchors.fill: parent
             }
 
-            Shortcut {
-                id: manualShortcut
-                sequence: "F3"
-                onActivated: leftTabView.currentIndex = 0
+            Item { // 3D Preview
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                PreviewPanel {
+                    anchors.fill: parent
+                }
             }
 
-            /*QQ1.TabView {
-                id: leftTabView
-                anchors.fill: parent
+            Item { // Manual & MDI
+                width: 200
+                implicitWidth: 200
+                Layout.margins: 5
+                Layout.preferredWidth: 200
+                Layout.maximumWidth: 200
+                Layout.fillHeight: true
 
-                ManualTab { }
-
-                MdiTab { }
-
-                Shortcut {
-                    id: mdiShortcut
-                    sequence: "F5"
-                    onActivated: leftTabView.currentIndex = 1
+                ManualTab {
+                    anchors.fill: parent
                 }
+
+                //MdiTab { }
+
                 Shortcut {
                     id: manualShortcut
                     sequence: "F3"
                     onActivated: leftTabView.currentIndex = 0
                 }
-            }//*/
+                /*Shortcut {
+                    id: mdiShortcut
+                    sequence: "F5"
+                    onActivated: leftTabView.currentIndex = 1
+                }//*/
+            }
         }
 
+        SourceCodePanel { // G-Code program view
+            id: sourceView
+            SplitView.fillWidth: true
+            SplitView.minimumHeight: headerHeight
+            SplitView.preferredHeight: preferredHeight
+            property int preferredHeight: deployedHeight
+            property int deployedHeight: window.height * 0.3
 
-    }
+            Connections {
+                // Change reduced state if reduced or expanded manually via the split view
+                target: splitView
+                onResizingChanged: {
+                    if (sourceView.reduced && sourceView.height > sourceView.headerHeight)
+                        sourceView.reduced = false
+                    else if (!sourceView.reduced && sourceView.height <= sourceView.headerHeight)
+                            sourceView.reduced = true
+                }
+            }
 
-    /*DisplayPanel {
-        id: rightTabView
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.bottom: sourceView.top
-        width: parent.width * 0.25
-    }//*/
+            SmoothedAnimation {
+                id: reduceAnimation
+                target: sourceView
+                property: "preferredHeight"
+                velocity: 500
+            }
+            onReducedChanged: {
+                if (reduced) {
+                    deployedHeight = height // Save current height
+                    reduceAnimation.from = deployedHeight
+                    reduceAnimation.to = headerHeight
+                    reduceAnimation.start()
+                } else {
+                    reduceAnimation.from = headerHeight
+                    reduceAnimation.to = deployedHeight
+                    reduceAnimation.start()
+                }
+            }
+        }
+    } // SplitView
+
+
 
     ApplicationNotifications {
         id: applicationNotifications
