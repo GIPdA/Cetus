@@ -8,7 +8,7 @@ import "items"
 
 Item {
     id: root
-    property bool reduced: false
+    property bool reduced: true
     property alias programLoaded: sourceView.programLoaded
     property alias headerHeight: header.height
 
@@ -30,7 +30,7 @@ Item {
                 leftMargin: 25
             }
             verticalAlignment: Text.AlignVCenter
-            text: qsTr("G-Code View") + (!programLoaded ? qsTr("Not loaded", "Program not loaded") : "")
+            text: qsTr("G-Code View") + " - "+ (!programLoaded ? qsTr("No program loaded") : "")
             color: "white"
         }
 

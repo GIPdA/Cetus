@@ -180,7 +180,7 @@ ServiceWindow {
             SplitView.minimumHeight: headerHeight
             SplitView.preferredHeight: preferredHeight
             property int preferredHeight: deployedHeight
-            property int deployedHeight: window.height * 0.3
+            property int deployedHeight: programLoaded ? window.height * 0.3 : headerHeight
 
             Connections {
                 // Change reduced state if reduced or expanded manually via the split view
