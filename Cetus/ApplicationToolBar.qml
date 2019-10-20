@@ -5,36 +5,42 @@ import Machinekit.Application.Controls 1.0
 import Machinekit.PathView 1.0
 import Machinekit.Controls 1.0
 import "./Controls"
+//import "actions"
+import "items"
 
 ToolBar {
     implicitHeight: rowLayout.implicitHeight
+    background: Rectangle {
+        color: "#343434"
+    }
 
     RowLayout {
         id: rowLayout
+        //anchors.fill: parent
 
-        ToolButton { action: EstopAction { shortcut: "" } }
-        ToolButton { action: PowerAction { shortcut: "" } }
+        FlatToolButton { action: EstopAction {  shortcut: "" } }
+        FlatToolButton { action: PowerAction { shortcut: "" } }
         Spacer {}
-        ToolButton { action: OpenAction { fileDialog: applicationFileDialog; shortcut: "" } }
-        ToolButton { action: OpenAction { fileDialog: remoteFileDialog; remote: true; shortcut: "" } }
-        ToolButton { action: ReopenAction { shortcut: "" } }
+        FlatToolButton { action: OpenAction { fileDialog: applicationFileDialog; shortcut: "" } }
+        FlatToolButton { action: OpenAction { fileDialog: remoteFileDialog; remote: true; shortcut: "" } }
+        FlatToolButton { action: ReopenAction { shortcut: "" } }
         Spacer {}
-        ToolButton { action: RunProgramAction { shortcut: "" } }
-        ToolButton { action: StepProgramAction { shortcut: "" } }
-        ToolButton { action: PauseResumeProgramAction { shortcut: "" } }
-        ToolButton { action: StopProgramAction { shortcut: "" } }
-        /*
+        FlatToolButton { action: RunProgramAction { shortcut: "" } }
+        FlatToolButton { action: StepProgramAction { shortcut: "" } }
+        FlatToolButton { action: PauseResumeProgramAction { shortcut: "" } }
+        FlatToolButton { action: StopProgramAction { shortcut: "" } }
+
         Spacer {}
-        ToolButton { action: ZoomOutAction { view: pathViewConfig } }
-        ToolButton { action: ZoomInAction { view: pathViewConfig } }
-        ToolButton { action: ZoomOriginalAction { view: pathViewConfig } }
-        ToolButton { action: ViewModeAction { view: pathViewConfig; viewMode: "Top" } visible: action.visible }
-        ToolButton { action: ViewModeAction { view: pathViewConfig; viewMode: "RotatedTop" } visible: action.visible }
-        ToolButton { action: ViewModeAction { view: pathViewConfig; viewMode: "Front" } visible: action.visible }
-        ToolButton { action: ViewModeAction { view: pathViewConfig; viewMode: "Side" } visible: action.visible }
-        ToolButton { action: ViewModeAction { view: pathViewConfig; viewMode: "Perspective" } visible: action.visible }
+        FlatToolButton { action: ZoomOutAction { view: pathViewConfig } }
+        FlatToolButton { action: ZoomInAction { view: pathViewConfig } }
+        FlatToolButton { action: ZoomOriginalAction { view: pathViewConfig } }
+        FlatToolButton { action: ViewModeAction { view: pathViewConfig; viewMode: "Top" } visible: action.visible }
+        FlatToolButton { action: ViewModeAction { view: pathViewConfig; viewMode: "RotatedTop" } visible: action.visible }
+        FlatToolButton { action: ViewModeAction { view: pathViewConfig; viewMode: "Front" } visible: action.visible }
+        FlatToolButton { action: ViewModeAction { view: pathViewConfig; viewMode: "Side" } visible: action.visible }
+        FlatToolButton { action: ViewModeAction { view: pathViewConfig; viewMode: "Perspective" } visible: action.visible }
         //*/
         Spacer {}
-        ToolButton { action: ClearBackplotAction { shortcut: "" } }
+        FlatToolButton { action: ClearBackplotAction { shortcut: "" } }
     }
 }
