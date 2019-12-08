@@ -8,7 +8,7 @@ import "items"
 
 Item {
     id: root
-    property bool reduced: true
+    property bool reduced: false
     property alias programLoaded: sourceView.programLoaded
     property alias headerHeight: header.height
 
