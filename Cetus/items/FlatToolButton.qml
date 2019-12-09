@@ -11,6 +11,11 @@ ToolButton {
     //display: AbstractButton.TextUnderIcon
     icon.color: enabled ? "transparent" : "gray"
 
+    ToolTip.visible: hovered
+    ToolTip.delay: 800
+    ToolTip.timeout: 5000
+    ToolTip.text: action.tooltip
+
     background: Rectangle {
         implicitWidth: 40
         implicitHeight: 40
