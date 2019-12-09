@@ -12,7 +12,7 @@ Item {
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: 5
-        anchors.leftMargin: 10
+        anchors.leftMargin: 20
         spacing: 5
 
         AxisControls {}

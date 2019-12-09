@@ -105,7 +105,12 @@ ServiceWindow {
 
     SplitView {
         id: splitView
-        anchors.fill: parent
+        anchors {
+            top: parent.top
+            bottom: parent.bottom
+            left: parent.left
+            right: manualView.left
+        }
         orientation: Qt.Vertical
 
         handle: Rectangle {
@@ -145,32 +150,6 @@ ServiceWindow {
                 PreviewPanel {
                     anchors.fill: parent
                 }
-            }
-
-            Item { // Manual & MDI
-                width: 200
-                implicitWidth: 200
-                Layout.margins: 5
-                Layout.preferredWidth: 200
-                Layout.maximumWidth: 200
-                Layout.fillHeight: true
-
-                ManualTab {
-                    anchors.fill: parent
-                }
-
-                //MdiTab { }
-
-                Shortcut {
-                    id: manualShortcut
-                    sequence: "F3"
-                    onActivated: leftTabView.currentIndex = 0
-                }
-                /*Shortcut {
-                    id: mdiShortcut
-                    sequence: "F5"
-                    onActivated: leftTabView.currentIndex = 1
-                }//*/
             }
         }
 
@@ -213,6 +192,35 @@ ServiceWindow {
             }
         }
     } // SplitView
+
+    Item { // Manual & MDI
+        id: manualView
+        anchors {
+            top: parent.top
+            bottom: parent.bottom
+            //left: parent.left
+            right: parent.right
+        }
+        width: 220
+        implicitWidth: 220
+
+        ManualTab {
+            anchors.fill: parent
+        }
+
+        //MdiTab { }
+
+        Shortcut {
+            id: manualShortcut
+            sequence: "F3"
+            onActivated: leftTabView.currentIndex = 0
+        }
+        /*Shortcut {
+            id: mdiShortcut
+            sequence: "F5"
+            onActivated: leftTabView.currentIndex = 1
+        }//*/
+    }
 
 
 
