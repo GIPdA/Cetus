@@ -156,30 +156,71 @@ ColumnLayout {
             font.italic: !enabled
         }
 
-        RoundedButton {
-            id: homeAxisButton
+        RowLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.maximumHeight: d.maxItemHeight
             Layout.minimumHeight: d.minItemHeight
-            action: HomeAxisAction { axis: axisRadioGroup.axis }
-            //visible: !homeAllAxesButton.visible
+            spacing: 1
 
-            font.pixelSize: 22
-            font.italic: !enabled
+            function update() {
+                //RoundedRectangleHelper.updateRowRadiusStyle(this, !controlsItem.visible, true)
+            }
+
+            RoundedButton {
+                id: homeAxisButton
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.maximumHeight: d.maxItemHeight
+                Layout.minimumHeight: d.minItemHeight
+                action: HomeAxisAction { axis: axisRadioGroup.axis }
+                //visible: !homeAllAxesButton.visible
+                onVisibleChanged: parent.update()
+
+                font.pixelSize: 22
+                font.italic: !enabled
+            }
+
+            RoundedButton {
+                id: unhomeAxisButton
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.maximumHeight: d.maxItemHeight
+                Layout.minimumHeight: d.minItemHeight
+                action: UnhomeAxisAction { axis: axisRadioGroup.axis }
+                onVisibleChanged: parent.update()
+
+                font.pixelSize: 22
+                font.italic: !enabled
+            }
+
+            /*RoundedButton {
+                id: spindleDecreaseButton
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                action: DecreaseSpindleSpeedAction { }
+                visible: d.spindleMinusVisible
+                onVisibleChanged: parent.update()
+                font.pixelSize: height
+                font.family: CetusStyle.control.text.font.family
+                //font.weight: Font.Medium
+                font.bold: true
+            }
+            RoundedButton {
+                id: spindleIncreaseButton
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                action: IncreaseSpindleSpeedAction { }
+                visible: d.spindlePlusVisible
+                onVisibleChanged: parent.update()
+                font.pixelSize: height
+                font.family: CetusStyle.control.text.font.family
+                //font.weight: Font.Medium
+                font.bold: true
+            }//*/
         }
 
-        RoundedButton {
-            id: unhomeAxisButton
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            Layout.maximumHeight: d.maxItemHeight
-            Layout.minimumHeight: d.minItemHeight
-            action: UnhomeAxisAction { axis: axisRadioGroup.axis }
 
-            font.pixelSize: 22
-            font.italic: !enabled
-        }
 
         RoundedButton {
             Layout.fillWidth: true
