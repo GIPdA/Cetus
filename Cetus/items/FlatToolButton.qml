@@ -11,7 +11,7 @@ ToolButton {
     //display: AbstractButton.TextUnderIcon
     icon.color: enabled ? "transparent" : "gray"
 
-    ToolTip.visible: hovered
+    ToolTip.visible: hovered && !down
     ToolTip.delay: 800
     ToolTip.timeout: 5000
     ToolTip.text: action.tooltip
