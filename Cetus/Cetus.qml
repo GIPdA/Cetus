@@ -32,6 +32,8 @@ ServiceWindow {
 
     color: "#343434"
 
+    property bool g_mdiOverride: false // When true, MDI overrides Manual controls
+
     /*property bool __synced: applicationCore.status.synced
     on__SyncedChanged: {
         function printMap(tab, map) {
@@ -147,6 +149,7 @@ ServiceWindow {
             Item { // 3D Preview
                 Layout.fillWidth: true
                 Layout.fillHeight: true
+
                 PreviewPanel {
                     anchors.fill: parent
                 }
@@ -220,6 +223,28 @@ ServiceWindow {
             sequence: "F5"
             onActivated: leftTabView.currentIndex = 1
         }//*/
+    }
+
+
+    MouseArea { // FloatingPanel focus leave
+        anchors.fill: parent
+        enabled: mdiPanel.focus
+        propagateComposedEvents: true
+        onPressed: {
+            mouse.accepted = false
+            window.focus = true
+        }
+    }
+    FloatingPanel {
+        id: mdiPanel
+        onFocusChanged: {
+            //print("FOCUS!", focus)
+            g_mdiOverride = focus
+        }
+
+        MdiPanel {
+            anchors.fill: parent
+        }
     }
 
 

@@ -42,7 +42,7 @@ ApplicationItem {
         sequence: root.decrementKeys[index]
         onPressed: d.activateDecrement(index)
         onReleased: d.deactivateDecrement(index);
-        enabled: root.axes >= (index + 1)
+        enabled: root.axes >= (index + 1) && !g_mdiOverride
         autoRepeat: false
     }
 
@@ -51,7 +51,7 @@ ApplicationItem {
         sequence: root.decrementKeys[index]
         onPressed: d.activateDecrement(index)
         onReleased: d.deactivateDecrement(index);
-        enabled: root.axes >= (index + 1)
+        enabled: root.axes >= (index + 1) && !g_mdiOverride
         autoRepeat: false
     }
 
@@ -80,7 +80,7 @@ ApplicationItem {
         sequence: root.incrementKeys[index]
         onPressed: d.activateIncrement(index)
         onReleased: d.deactivateIncrement(index);
-        enabled: root.axes >= (index + 1)
+        enabled: root.axes >= (index + 1) && !g_mdiOverride
         autoRepeat: false
     }
 
@@ -89,7 +89,7 @@ ApplicationItem {
         sequence: root.incrementKeys[index]
         onPressed: d.activateIncrement(index)
         onReleased: d.deactivateIncrement(index);
-        enabled: root.axes >= (index + 1)
+        enabled: root.axes >= (index + 1) && !g_mdiOverride
         autoRepeat: false
     }
 
