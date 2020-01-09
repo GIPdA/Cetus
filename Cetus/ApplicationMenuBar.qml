@@ -4,10 +4,37 @@ import Machinekit.Application.Controls 1.0
 import Machinekit.PathView 1.0
 
 MenuBar {
+    background: Rectangle {
+        color: "#343434"
+    }
+
+    delegate: MenuBarItem {
+        id: menuBarItem
+
+        contentItem: Text {
+            text: menuBarItem.text // TODO: hide &-shortcuts
+            font: menuBarItem.font
+            opacity: enabled ? 1.0 : 0.3
+            color: "#ffffff"
+            horizontalAlignment: Text.AlignLeft
+            verticalAlignment: Text.AlignVCenter
+            elide: Text.ElideRight
+        }
+
+        background: Rectangle {
+            implicitWidth: 40
+            implicitHeight: 40
+            opacity: enabled ? 1 : 0.3
+            color: menuBarItem.highlighted ? "#3f3f3f" : "transparent"
+        }
+    }
+
     Menu {
-        title: qsTr("&File")
+        title: qsTr("File")
+
         MenuItem { action: OpenAction { fileDialog: applicationFileDialog } }
         MenuItem {
+            icon.color: enabled ? "transparent" : "gray"
             action: OpenAction {
                 fileDialog: remoteFileDialog
                 remote: true
@@ -27,26 +54,26 @@ MenuBar {
         // Ladder editor
 
         MenuItem {
-            text: qsTr("&Disconnect from Session")
+            text: qsTr("Disconnect from Session")
             icon.name: "network-disconnect"
             onTriggered: window.disconnect()
         }
 
         MenuItem {
-            text: qsTr("Sh&utdown Session")
+            text: qsTr("Shutdown Session")
             action: ShutdownAction {}
             onTriggered: window.shutdown()
         }
 
         MenuItem {
-            text: qsTr("E&xit User Interface")
+            text: qsTr("Exit User Interface")
             icon.name: "application-exit"
             action: Action { shortcut: "Ctrl+Q" }
             onTriggered: Qt.quit()
         }
     }
     Menu {
-        title: qsTr("&Machine")
+        title: qsTr("Machine")
 
         MenuItem { action: EstopAction { } }
         MenuItem { action: PowerAction { } }
@@ -67,8 +94,8 @@ MenuBar {
         // tool touch off to fixture
     }
     Menu {
-        title: qsTr("&View")
-        MenuItem { action: enablePreviewAction }
+        title: qsTr("View")
+        /*MenuItem { action: enablePreviewAction }
         MenuItem { action: showProgramAction }
         MenuItem { action: showProgramRapidsAction }
         MenuItem { action: showProgramExtentsAction }
@@ -80,7 +107,7 @@ MenuBar {
         MenuItem { action: showOffsetsAction }
         MenuItem { action: showVelocityAction }
         MenuItem { action: showDistanceToGoAction }
-        MenuItem { action: showSpindleSpeedAction }
+        MenuItem { action: showSpindleSpeedAction }//*/
 
         ToggleSettingAction {
             id: showOffsetsAction
