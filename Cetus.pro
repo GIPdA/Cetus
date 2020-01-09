@@ -39,4 +39,3 @@ TRANSLATIONS_OUT_PATH = $$PWD/$$NAME/translations
 include(translation.pri)
 
 DISTFILES += \
-    Cetus/CoolantControls.qml

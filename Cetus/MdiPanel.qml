@@ -8,6 +8,7 @@ import "CetusStyle"
 
 FocusScope {
     //title: qsTr("MDI") //+ " [" + mdiShortcut.sequence + "]"
+    // TODO: title bar + auto reduce
 
     ColumnLayout {
         anchors.fill: parent
@@ -40,7 +41,4 @@ FocusScope {
             color: CetusStyle.control.foreground.color
         }
     }
-
-
-
 }
