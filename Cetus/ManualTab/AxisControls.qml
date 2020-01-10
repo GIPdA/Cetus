@@ -254,8 +254,9 @@ ColumnLayout {
 
         TouchOffDialog {
             id: touchOffDialog
+            x: -width-30
             axis: axisRadioGroup.axis
-            height: window.height * 0.2
+            height: 300
         }
     }
 
