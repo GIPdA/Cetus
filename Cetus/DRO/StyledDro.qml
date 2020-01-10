@@ -8,27 +8,21 @@ import "../icons"
 AbstractDigitalReadOut {
     id: root
     implicitWidth: layout.implicitWidth
-    implicitHeight: layout.implicitHeight
+    implicitHeight: layout.implicitHeight+20+12
     visible: _ready
 
     readonly property string units: helper.ready ? helper.distanceUnits + "/" + helper.timeUnits : "?"
 
-    Rectangle {
-        anchors.fill: parent
-        opacity: 0
-        border.width: 3
-        border.color: "red"
-    }
-
     ColumnLayout {
         id: layout
         anchors.fill: parent
+        anchors.topMargin: 20
         spacing: 15
 
         MultiAxisDro { // Main DRO
             id: mainDro
             Layout.fillWidth: true
-            Layout.fillHeight: true
+            //Layout.fillHeight: true
             Layout.minimumHeight: minimumImplicitHeight
 
             label: qsTr("DRO")
@@ -126,7 +120,7 @@ AbstractDigitalReadOut {
         MultiAxisDro { // Extra
             id: extraDro
             Layout.fillWidth: true
-            Layout.fillHeight: true
+            //Layout.fillHeight: true
             Layout.minimumHeight: minimumImplicitHeight
             //visible: !root.offsetsVisible && (axes.length > 0)
 
@@ -226,7 +220,7 @@ AbstractDigitalReadOut {
         MultiAxisDro { // G5x / G92 / Tools offsets
             id: offsetsDro
             Layout.fillWidth: true
-            Layout.fillHeight: true
+            //Layout.fillHeight: true
             Layout.minimumHeight: minimumImplicitHeight
             topMargin: 10
             visible: root.offsetsVisible
@@ -389,9 +383,6 @@ AbstractDigitalReadOut {
             }
         }//*/
 
-        Item {
-            Layout.fillHeight: true
-        }
     } // layout
 
 }

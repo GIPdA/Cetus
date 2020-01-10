@@ -155,8 +155,13 @@ ServiceWindow {
 
                     DroPanel {
                         Layout.fillWidth: true
-                        Layout.fillHeight: true
+                        //Layout.fillHeight: true
                     }
+
+                    Item {
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                    }//*/
                 }
             }
 
