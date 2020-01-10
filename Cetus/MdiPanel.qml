@@ -16,6 +16,8 @@ FocusScope {
 
         MdiHistoryTable {
             id: mdiHistoryTable
+            Layout.fillWidth: true
+            Layout.fillHeight: true
             onCommandSelected: {
                 mdiCommandEdit.text = command
             }
@@ -28,6 +30,8 @@ FocusScope {
 
         MdiCommandEdit {
             id: mdiCommandEdit
+            Layout.fillWidth: true
+            focus: true
         }
 
         Label {
@@ -37,6 +41,7 @@ FocusScope {
 
         GCodeLabel {
             Layout.fillWidth: true
+            height: 100
             wrapMode: Text.Wrap
             color: CetusStyle.control.foreground.color
         }

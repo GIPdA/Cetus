@@ -216,6 +216,11 @@ ColumnLayout {
             Layout.minimumHeight: d.minItemHeight
             text: qsTr("MDI Panel")
             checkable: true
+            checked: rootControls.mdiPanelVisible
+
+            font.pixelSize: 22
+            font.italic: !enabled
+
             onCheckedChanged: {
                 if (checked)
                     rootControls.showMdiControls()
@@ -223,8 +228,10 @@ ColumnLayout {
                     rootControls.hideMdiControls()
             }
 
-            font.pixelSize: 22
-            font.italic: !enabled
+            ToolTip.visible: hovered && !down
+            ToolTip.delay: 800
+            ToolTip.timeout: 5000
+            ToolTip.text: qsTr("Show or hide MDI panel [F5]")
         }
 
         TouchOffDialog {

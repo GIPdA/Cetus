@@ -63,17 +63,26 @@ ServiceWindow {
     Item {
         id: d
         readonly property string machineName: applicationCore.status.config.name
+        readonly property bool ready: applicationCore.status.ready
     }
 
     // Some global controls accessible everywhere
     Item {
         id: rootControls
 
+        property alias mdiPanelVisible: mdiPanel.visible
+
         function showMdiControls() {
             mdiPanel.show();
         }
         function hideMdiControls() {
             mdiPanel.hide();
+        }
+        function showOrHideMdiControls() {
+            if (mdiPanel.visible)
+                hideMdiControls()
+            else
+                showMdiControls()
         }
     }
 
@@ -219,7 +228,7 @@ ServiceWindow {
         Shortcut {
             id: manualShortcut
             sequence: "F3"
-            onActivated: leftTabView.currentIndex = 0
+            onActivated: rootControls.hideMdiControls()
         }
     }
 
@@ -237,12 +246,25 @@ ServiceWindow {
         id: mdiPanel
         x: manualView.x - width - 20
         y: 10
+
+        onVisibleChanged: {
+            if (visible)
+                focus = true
+            g_mdiOverride = visible
+        }
+
         onFocusChanged: {
             g_mdiOverride = focus
         }
 
         MdiPanel {
             anchors.fill: parent
+        }
+
+        Shortcut {
+            id: mdiShortcut
+            sequence: "F5"
+            onActivated: rootControls.showOrHideMdiControls()
         }
     }
 
