@@ -156,7 +156,7 @@ ColumnLayout {
             font.italic: !enabled
         }
 
-        RowLayout {
+        RowLayout { // Home/Unhome axis
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.maximumHeight: d.maxItemHeight
@@ -193,36 +193,11 @@ ColumnLayout {
                 font.pixelSize: 22
                 font.italic: !enabled
             }
-
-            /*RoundedButton {
-                id: spindleDecreaseButton
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                action: DecreaseSpindleSpeedAction { }
-                visible: d.spindleMinusVisible
-                onVisibleChanged: parent.update()
-                font.pixelSize: height
-                font.family: CetusStyle.control.text.font.family
-                //font.weight: Font.Medium
-                font.bold: true
-            }
-            RoundedButton {
-                id: spindleIncreaseButton
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                action: IncreaseSpindleSpeedAction { }
-                visible: d.spindlePlusVisible
-                onVisibleChanged: parent.update()
-                font.pixelSize: height
-                font.family: CetusStyle.control.text.font.family
-                //font.weight: Font.Medium
-                font.bold: true
-            }//*/
         }
 
 
-
         RoundedButton {
+            id: touchOffButton
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.maximumHeight: d.maxItemHeight

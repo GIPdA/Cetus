@@ -65,6 +65,7 @@ ServiceWindow {
         readonly property string machineName: applicationCore.status.config.name
     }
 
+    // Some global controls accessible everywhere
     Item {
         id: rootControls
 
@@ -147,13 +148,6 @@ ServiceWindow {
                         Layout.fillWidth: true
                         Layout.fillHeight: true
                     }
-
-                    /*/JogStick {
-                        id: jogStick
-                    }//*/
-                    /*Item {
-                        Layout.fillHeight: true
-                    }//*/
                 }
             }
 
@@ -222,18 +216,11 @@ ServiceWindow {
             anchors.fill: parent
         }
 
-        //MdiTab { }
-
         Shortcut {
             id: manualShortcut
             sequence: "F3"
             onActivated: leftTabView.currentIndex = 0
         }
-        /*Shortcut {
-            id: mdiShortcut
-            sequence: "F5"
-            onActivated: leftTabView.currentIndex = 1
-        }//*/
     }
 
 
@@ -246,12 +233,11 @@ ServiceWindow {
             window.focus = true
         }
     }
-    FloatingPanel {
+    FloatingPanel { // MDI controls panel
         id: mdiPanel
         x: manualView.x - width - 20
         y: 10
         onFocusChanged: {
-            //print("FOCUS!", focus)
             g_mdiOverride = focus
         }
 
