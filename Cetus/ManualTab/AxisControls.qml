@@ -138,10 +138,10 @@ ColumnLayout {
 
     // Buttons
     ColumnLayout {
+        id: buttonsLayout
         spacing: 1
 
-        onChildrenChanged: RoundedRectangleHelper.updateRadiusStyle(this)
-        Component.onCompleted: RoundedRectangleHelper.updateRadiusStyle(this)
+        onVisibleChanged: RoundedRectangleHelper.updateRadiusStyle(this)
 
         RoundedButton {
             id: homeAllAxesButton
@@ -151,6 +151,7 @@ ColumnLayout {
             Layout.minimumHeight: d.minItemHeight
             action: HomeAxisAction { id: homeAxisAction; axis: -1 }
             visible: homeAxisAction.homeAllAxesHelper.homingOrderDefined
+            onVisibleChanged: RoundedRectangleHelper.updateRadiusStyle(buttonsLayout)
 
             font.pixelSize: 22
             font.italic: !enabled

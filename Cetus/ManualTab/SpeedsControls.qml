@@ -13,14 +13,16 @@ ColumnLayout {
     id: root
     spacing: 1
 
-    onChildrenChanged: RoundedRectangleHelper.updateRadiusStyle(root)
-    Component.onCompleted: RoundedRectangleHelper.updateRadiusStyle(root)
+    onVisibleChanged: RoundedRectangleHelper.updateRadiusStyle(this)
 
     ApplicationObject {
         id: d
         readonly property bool spindleOverrideVisible: status.synced && status.ui.spindleOverrideVisible
+        readonly property bool ready: status.synced
         readonly property int minItemHeight: 30
         readonly property int maxItemHeight: 50
+
+        onReadyChanged: RoundedRectangleHelper.updateRadiusStyle(root)
     }
 
     Item {
@@ -90,6 +92,7 @@ ColumnLayout {
         Layout.maximumHeight: d.maxItemHeight
         Layout.minimumHeight: d.minItemHeight
         visible: d.spindleOverrideVisible
+        onVisibleChanged: RoundedRectangleHelper.updateRadiusStyle(root)
         proportional: true
 
         labelText: qsTr("Spindle Override")
