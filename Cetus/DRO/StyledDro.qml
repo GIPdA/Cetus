@@ -93,7 +93,7 @@ AbstractDigitalReadOut {
                 }
 
                 MultiText { // Distance To Go
-                    visible: root.offsetsVisible
+                    visible: root.distanceToGoVisible
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     digits: root.digits
