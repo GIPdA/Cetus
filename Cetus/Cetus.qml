@@ -65,6 +65,17 @@ ServiceWindow {
         readonly property string machineName: applicationCore.status.config.name
     }
 
+    Item {
+        id: rootControls
+
+        function showMdiControls() {
+            mdiPanel.show();
+        }
+        function hideMdiControls() {
+            mdiPanel.hide();
+        }
+    }
+
     ApplicationStatusBar { id: applicationStatusBar }
     ApplicationMenuBar { id: applicationMenuBar }
 
@@ -237,6 +248,8 @@ ServiceWindow {
     }
     FloatingPanel {
         id: mdiPanel
+        x: manualView.x - width - 20
+        y: 10
         onFocusChanged: {
             //print("FOCUS!", focus)
             g_mdiOverride = focus

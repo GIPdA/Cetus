@@ -14,8 +14,8 @@ ColumnLayout {
 
     QtObject {
         id: d
-        readonly property int minItemHeight: 30
-        readonly property int maxItemHeight: 50
+        readonly property int minItemHeight: 20
+        readonly property int maxItemHeight: 40
     }
 
     Item {
@@ -228,6 +228,25 @@ ColumnLayout {
             Layout.maximumHeight: d.maxItemHeight
             Layout.minimumHeight: d.minItemHeight
             action: TouchOffAction { touchOffDialog: touchOffDialog }
+
+            font.pixelSize: 22
+            font.italic: !enabled
+        }
+
+
+        RoundedButton {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumHeight: d.maxItemHeight
+            Layout.minimumHeight: d.minItemHeight
+            text: qsTr("MDI Panel")
+            checkable: true
+            onCheckedChanged: {
+                if (checked)
+                    rootControls.showMdiControls()
+                else
+                    rootControls.hideMdiControls()
+            }
 
             font.pixelSize: 22
             font.italic: !enabled

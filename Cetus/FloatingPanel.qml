@@ -10,20 +10,7 @@ Pane {
 
     width: 400
     height: 600
-
-    onFocusChanged: {
-        if (focus)
-            opacity = 1
-    }
-
-    OpacityAnimator {
-        target: root
-        from: 1;
-        to: 0.1;
-        duration: 1000
-        running: !focus
-    }
-
+    visible: false
 
     topInset: -3
     leftInset: -3
@@ -35,6 +22,14 @@ Pane {
         color: "#303030"
         border.color: "#505050"
         border.width: 2
+    }
+
+
+    function show() {
+        visible = true
+    }
+    function hide() {
+        visible = false
     }
 
 
@@ -50,8 +45,14 @@ Pane {
             anchors.fill: parent
             hoverEnabled: false
             onMoved: {
-                parent.x += dx
-                parent.y += dy
+                root.x += dx
+                root.y += dy
+
+                // Do not go too far!
+                root.x = Math.min(root.x, root.parent.width-15)
+                root.y = Math.min(root.y, root.parent.height-15)
+                root.x = Math.max(root.x, -root.width+15)
+                root.y = Math.max(root.y, -root.height+15)
             }
         }
     ]
