@@ -12,7 +12,7 @@ Button {
 
     property alias textColor: textItem.color
 
-    color: CetusStyle.control.background.colorWhen(enabled, down, false)
+    color: CetusStyle.control.background.colorWhen(enabled, down, checked)
     textColor: CetusStyle.control.foreground.colorWhen(enabled)
     radius: CetusStyle.control.radius
 
