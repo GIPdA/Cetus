@@ -3,19 +3,19 @@ import QtQuick.Layouts 1.12
 
 Item {
     id: root
-    implicitHeight: repeater.count*implicitAxisHeight + topMargin + margins*2
-    implicitWidth: droColumn.implicitWidth + groupLabel.implicitWidth + margins*2
+    implicitHeight: repeater.count*implicitAxisHeight + topMargin
+    implicitWidth: droColumn.implicitWidth + groupLabel.implicitWidth
 
     property alias axes: repeater.model
     property alias axesDelegate: repeater.delegate
     property int implicitAxisHeight: 40
     property int minimumAxisHeight: 20
-    property int maximumAxisHeight: 40
+    property int maximumAxisHeight: 45
     readonly property int axisHeight: d.clampAxisHeight(Math.floor(droColumn.height/repeater.count))
-    readonly property int minimumImplicitHeight: repeater.count*minimumAxisHeight
+    readonly property int minimumImplicitHeight: repeater.count*minimumAxisHeight + topMargin
+    readonly property int maximumImplicitHeight: repeater.count*maximumAxisHeight + topMargin
     property alias label: groupLabel.text
     property int topMargin: 0
-    property int margins: 0
 
     QtObject {
         id: d
@@ -24,22 +24,14 @@ Item {
         }
     }
 
-    Rectangle {
-        anchors.fill: parent
-        opacity: 0
-        border.width: 3
-        border.color: "red"
-    }
 
     Item {
         id: sideLabel
         anchors {
             top: parent.top
-            topMargin: root.topMargin+root.margins
+            topMargin: root.topMargin
             bottom: parent.bottom
-            bottomMargin: root.margins
             left: parent.left
-            leftMargin: root.margins
         }
         width: groupLabel.implicitWidth
 
@@ -60,12 +52,10 @@ Item {
         id: droColumn
         anchors {
             top: parent.top
-            topMargin: root.topMargin+root.margins
+            topMargin: root.topMargin
             bottom: parent.bottom
-            bottomMargin: root.margins-spacing
             left: sideLabel.right
             right: parent.right
-            rightMargin: root.margins
         }
         spacing: 0
 
@@ -78,10 +68,5 @@ Item {
                 id: repeater
             }
         }
-
-        /*Item {
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-        }//*/
     }
 }

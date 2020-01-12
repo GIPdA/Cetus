@@ -14,6 +14,7 @@ import Machinekit.VideoView 1.0
 //import CetusStyle 1.0
 import "CetusStyle"
 
+import "DRO"
 import "./StatusBar"
 import "./ManualTab"
 import "./ConfigurationPanel"
@@ -150,18 +151,8 @@ ServiceWindow {
                 Layout.preferredWidth: 500
                 Layout.fillHeight: true
 
-                ColumnLayout {
+                StyledDro {
                     anchors.fill: parent
-
-                    DroPanel {
-                        Layout.fillWidth: true
-                        //Layout.fillHeight: true
-                    }
-
-                    Item {
-                        Layout.fillHeight: true
-                        Layout.fillWidth: true
-                    }//*/
                 }
             }
 

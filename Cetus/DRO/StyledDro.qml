@@ -5,13 +5,16 @@ import Machinekit.Application.Controls 1.0
 
 import "../icons"
 
-AbstractDigitalReadOut {
+Item {
     id: root
     implicitWidth: layout.implicitWidth
-    implicitHeight: layout.implicitHeight+20+12
-    visible: _ready
+    implicitHeight: layout.implicitHeight
+    visible: dro._ready
 
-    readonly property string units: helper.ready ? helper.distanceUnits + "/" + helper.timeUnits : "?"
+    AbstractDigitalReadOut {
+        id: dro
+        readonly property string units: helper.ready ? helper.distanceUnits + "/" + helper.timeUnits : "?"
+    }
 
     ColumnLayout {
         id: layout
@@ -22,8 +25,9 @@ AbstractDigitalReadOut {
         MultiAxisDro { // Main DRO
             id: mainDro
             Layout.fillWidth: true
-            //Layout.fillHeight: true
+            Layout.fillHeight: true
             Layout.minimumHeight: minimumImplicitHeight
+            Layout.maximumHeight: maximumImplicitHeight
 
             label: qsTr("DRO")
 
@@ -31,23 +35,23 @@ AbstractDigitalReadOut {
                 Component.onCompleted: {
                     function addAxis(i) { // var item can't be "reused", so to use loops we must use a function to create a row
                         var item = append()//appendWithProperties(["name", "homed", "position", "distanceToGo"])
-                        item.name =         root.axisNames[i]
-                        item.homed =        Qt.binding(function() { return (i < root.axisHomed.length) && root.axisHomed[root._axisIndices[i]].homed })
-                        item.position =     Qt.binding(function() { return Number(root.position[root._axisNames[i]]) })
-                        item.distanceToGo = Qt.binding(function() { return Number(root.dtg[root._axisNames[i]]) })
+                        item.name =         dro.axisNames[i]
+                        item.homed =        Qt.binding(function() { return (i < dro.axisHomed.length) && dro.axisHomed[dro._axisIndices[i]].homed })
+                        item.position =     Qt.binding(function() { return Number(dro.position[dro._axisNames[i]]) })
+                        item.distanceToGo = Qt.binding(function() { return Number(dro.dtg[dro._axisNames[i]]) })
                     }
-                    for (var i = 0; i < root.axes; ++i) {
+                    for (var i = 0; i < dro.axes; ++i) {
                         addAxis(i)
                     }
 
-                    if (root.lathe) {
+                    if (dro.lathe) {
                         // Lathe mode, X is replaced by Rad, Dia is inserted juste after
                         at(0).name = qsTr("Rad")
 
                         var item = insertAt(1)
                         item.name =         qsTr("Dia")
-                        item.position =     Qt.binding(function() { return Number(root.position['x']) * 2.0 })
-                        item.distanceToGo = Qt.binding(function() { return Number(root.dtg['x']) * 2.0 })
+                        item.position =     Qt.binding(function() { return Number(dro.position['x']) * 2.0 })
+                        item.distanceToGo = Qt.binding(function() { return Number(dro.dtg['x']) * 2.0 })
                     }
                 }
             }
@@ -56,7 +60,7 @@ AbstractDigitalReadOut {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 Layout.preferredHeight: mainDro.axisHeight
-                Layout.maximumHeight: mainDro.axisHeight
+                Layout.maximumHeight: mainDro.axisHeight-1
                 Layout.minimumHeight: mainDro.axisHeight
                 axisName: modelData.name
                 axisColor: "#0096EC"
@@ -68,8 +72,8 @@ AbstractDigitalReadOut {
                 MultiText { // Position
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    digits: root.digits
-                    decimals: root.decimals
+                    digits: dro.digits
+                    decimals: dro.decimals
                     value: modelData.position
 
                     DroLabel {
@@ -87,11 +91,11 @@ AbstractDigitalReadOut {
                 }
 
                 MultiText { // Distance To Go
-                    visible: root.distanceToGoVisible
+                    visible: dro.distanceToGoVisible
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    digits: root.digits
-                    decimals: root.decimals
+                    digits: dro.digits
+                    decimals: dro.decimals
                     value: modelData.distanceToGo
 
                     DroLabel {
@@ -120,14 +124,15 @@ AbstractDigitalReadOut {
         MultiAxisDro { // Extra
             id: extraDro
             Layout.fillWidth: true
-            //Layout.fillHeight: true
+            Layout.fillHeight: true
             Layout.minimumHeight: minimumImplicitHeight
+            Layout.maximumHeight: maximumImplicitHeight
             //visible: !root.offsetsVisible && (axes.length > 0)
 
             label: qsTr("Extra")
 
             Connections {
-                target: root
+                target: dro
                 onVelocityVisibleChanged: extraDroModel.makeModel()
                 onDistanceToGoVisibleChanged: extraDroModel.makeModel()
                 onSpindleSpeedVisibleChanged: extraDroModel.makeModel()
@@ -137,26 +142,26 @@ AbstractDigitalReadOut {
                 id: extraDroModel
                 function makeModel() {
                     clear()
-                    if (root.velocityVisible) {
+                    if (dro.velocityVisible) {
                         var velocityItem = beginAppend()
                         velocityItem.name = qsTr("Vel")
-                        velocityItem.value = Qt.binding(function() { return root.velocity+0 })
-                        velocityItem.units = root.units
+                        velocityItem.value = Qt.binding(function() { return dro.velocity+0 })
+                        velocityItem.units = dro.units
                         endAppend()
                     }
 
-                    if (root.distanceToGoVisible) {
+                    if (dro.distanceToGoVisible) {
                         var dtgItem = beginAppend()
                         dtgItem.name = qsTr("DTG")
-                        dtgItem.value = Qt.binding(function() { return root.distanceToGo+0 })
+                        dtgItem.value = Qt.binding(function() { return dro.distanceToGo+0 })
                         dtgItem.units = ""
                         endAppend()
                     }
 
-                    if (root.spindleSpeedVisible) {
+                    if (dro.spindleSpeedVisible) {
                         var spindleSpeedItem = beginAppend()
-                        spindleSpeedItem.name = Qt.binding(function() { return qsTr("S%1").arg(root.spindleDirection === 1 ? "⟳" : (root.spindleDirection === -1 ? "⟲" : "")) })
-                        spindleSpeedItem.value = Qt.binding(function() { return root.spindleSpeed })
+                        spindleSpeedItem.name = Qt.binding(function() { return qsTr("S%1").arg(dro.spindleDirection === 1 ? "⟳" : (dro.spindleDirection === -1 ? "⟲" : "")) })
+                        spindleSpeedItem.value = Qt.binding(function() { return dro.spindleSpeed })
                         spindleSpeedItem.units = ""
                         endAppend()
                     }
@@ -169,7 +174,7 @@ AbstractDigitalReadOut {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 Layout.preferredHeight: mainDro.axisHeight
-                Layout.maximumHeight: mainDro.axisHeight
+                Layout.maximumHeight: mainDro.axisHeight-1
                 Layout.minimumHeight: mainDro.axisHeight
                 axisName: modelData.name
                 axisColor: "#44D7B6"
@@ -187,8 +192,8 @@ AbstractDigitalReadOut {
                 MultiText {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    digits: root.digits
-                    decimals: root.decimals
+                    digits: dro.digits
+                    decimals: dro.decimals
                     value: modelData.value
                 }
 
@@ -220,10 +225,11 @@ AbstractDigitalReadOut {
         MultiAxisDro { // G5x / G92 / Tools offsets
             id: offsetsDro
             Layout.fillWidth: true
-            //Layout.fillHeight: true
+            Layout.fillHeight: true
             Layout.minimumHeight: minimumImplicitHeight
+            Layout.maximumHeight: maximumImplicitHeight
             topMargin: 10
-            visible: root.offsetsVisible
+            visible: dro.offsetsVisible
 
             label: qsTr("Offsets")
 
@@ -231,13 +237,13 @@ AbstractDigitalReadOut {
                 Component.onCompleted: {
                     function addAxis(i) {
                         var item = append()
-                        item.name =         root.axisNames[i]
-                        item.homed =        Qt.binding(function() { return (i < root.axisHomed.length) && root.axisHomed[root._axisIndices[i]].homed })
-                        item.g5xOffset =    Qt.binding(function() { return Number(root.g5xOffset[root._axisNames[i]]) })
-                        item.g92Offset =    Qt.binding(function() { return Number(root.g92Offset[root._axisNames[i]]) })
-                        item.toolOffset =   Qt.binding(function() { return Number(root.toolOffset[root._axisNames[i]]) })
+                        item.name =         dro.axisNames[i]
+                        item.homed =        Qt.binding(function() { return (i < dro.axisHomed.length) && dro.axisHomed[dro._axisIndices[i]].homed })
+                        item.g5xOffset =    Qt.binding(function() { return Number(dro.g5xOffset[dro._axisNames[i]]) })
+                        item.g92Offset =    Qt.binding(function() { return Number(dro.g92Offset[dro._axisNames[i]]) })
+                        item.toolOffset =   Qt.binding(function() { return Number(dro.toolOffset[dro._axisNames[i]]) })
                     }
-                    for (var i = 0; i < root.axes; ++i) {
+                    for (var i = 0; i < dro.axes; ++i) {
                         addAxis(i)
                     }
                 }
@@ -247,7 +253,7 @@ AbstractDigitalReadOut {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 Layout.preferredHeight: mainDro.axisHeight
-                Layout.maximumHeight: mainDro.axisHeight
+                Layout.maximumHeight: mainDro.axisHeight-1
                 Layout.minimumHeight: mainDro.axisHeight
                 axisName: modelData.name
                 axisColor: "#D60000"
@@ -259,11 +265,12 @@ AbstractDigitalReadOut {
                 MultiText { // G5x Offset (current active offset)
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    digits: root.digits
-                    decimals: root.decimals
+                    digits: dro.digits
+                    decimals: dro.decimals
                     value: modelData.g5xOffset
 
                     DroLabel {
+                        id: offsetDroTopLabel
                         anchors {
                             leftMargin: parent.signWidth
                             left: parent.left
@@ -273,16 +280,16 @@ AbstractDigitalReadOut {
                         }
                         visible: index == 0
                         textColor: "white"
-                        text: qsTr("%1").arg(root.g5xNames[root.g5xIndex - 1])
+                        text: qsTr("%1").arg(dro.g5xNames[dro.g5xIndex - 1])
                     }
                 }
 
                 MultiText { // G92
-                    visible: root.offsetsVisible
+                    visible: dro.offsetsVisible
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    digits: root.digits
-                    decimals: root.decimals
+                    digits: dro.digits
+                    decimals: dro.decimals
                     value: modelData.g92Offset
 
                     DroLabel {
@@ -300,11 +307,11 @@ AbstractDigitalReadOut {
                 }
 
                 MultiText { // Tool offset
-                    visible: root.offsetsVisible
+                    visible: dro.offsetsVisible
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    digits: root.digits
-                    decimals: root.decimals
+                    digits: dro.digits
+                    decimals: dro.decimals
                     value: modelData.toolOffset
 
                     DroLabel {
@@ -383,6 +390,9 @@ AbstractDigitalReadOut {
             }
         }//*/
 
-    } // layout
 
+        Item {
+            Layout.fillHeight: true
+        }
+    } // layout
 }

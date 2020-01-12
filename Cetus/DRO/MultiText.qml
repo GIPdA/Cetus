@@ -25,6 +25,7 @@ Item {
             top: parent.top
             bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter
+            topMargin: 2
         }
 
         Text {
@@ -42,8 +43,8 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             color: root.inactiveColor
             text: d.leftOverText
-            font.family: "Monospace"
-            font.pixelSize: Math.min(root.height*0.7, root.width / 5.7)
+            font.family: "Courier"
+            font.pixelSize: Math.min(root.height*0.9, root.width / 5.3)
         }
 
         Text {
