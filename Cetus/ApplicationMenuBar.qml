@@ -3,12 +3,14 @@ import QtQuick.Controls 2.12
 import Machinekit.Application.Controls 1.0
 import Machinekit.PathView 1.0
 
+import "items"
+
 MenuBar {
     background: Rectangle {
         color: "#343434"
     }
 
-    delegate: MenuBarItem {
+    /*delegate: MenuBarItem {
         id: menuBarItem
 
         contentItem: Text {
@@ -27,14 +29,13 @@ MenuBar {
             opacity: enabled ? 1 : 0.3
             color: menuBarItem.highlighted ? "#3f3f3f" : "transparent"
         }
-    }
+    }//*/
 
     Menu {
         title: qsTr("File")
 
         MenuItem { action: OpenAction { fileDialog: applicationFileDialog } }
         MenuItem {
-            icon.color: enabled ? "transparent" : "gray"
             action: OpenAction {
                 fileDialog: remoteFileDialog
                 remote: true
@@ -109,95 +110,122 @@ MenuBar {
         MenuItem { action: showDistanceToGoAction }
         MenuItem { action: showSpindleSpeedAction }//*/
 
-        ToggleSettingAction {
-            id: showOffsetsAction
-            groupName: "dro"
-            valueName: "showOffsets"
-            text: qsTr("Show o&ffsets")
+        MenuItem {
+            action: ToggleSettingAction {
+                id: showOffsetsAction
+                groupName: "dro"
+                valueName: "showOffsets"
+                text: qsTr("Show o&ffsets")
+            }
         }
 
-        ToggleSettingAction {
-            id: showVelocityAction
-            groupName: "dro"
-            valueName: "showVelocity"
-            text: qsTr("Show v&elocity")
+
+        MenuItem {
+            action: ToggleSettingAction {
+                id: showVelocityAction
+                groupName: "dro"
+                valueName: "showVelocity"
+                text: qsTr("Show v&elocity")
+            }
         }
 
-        ToggleSettingAction {
-            id: showDistanceToGoAction
-            groupName: "dro"
-            valueName: "showDistanceToGo"
-            text: qsTr("Show &distance to go")
+        MenuItem {
+            action: ToggleSettingAction {
+                id: showDistanceToGoAction
+                groupName: "dro"
+                valueName: "showDistanceToGo"
+                text: qsTr("Show &distance to go")
+            }
         }
 
-        ToggleSettingAction {
-            id: showSpindleSpeedAction
-            groupName: "dro"
-            valueName: "showSpindleSpeed"
-            text: qsTr("Show &spindle speed")
+        MenuItem {
+            action: ToggleSettingAction {
+                id: showSpindleSpeedAction
+                groupName: "dro"
+                valueName: "showSpindleSpeed"
+                text: qsTr("Show &spindle speed")
+            }
         }
 
-        ToggleSettingAction {
-            id: enablePreviewAction
-            groupName: "preview"
-            valueName: "enable"
-            text: qsTr("Enable &preview")
+        MenuItem {
+            action: ToggleSettingAction {
+                id: enablePreviewAction
+                groupName: "preview"
+                valueName: "enable"
+                text: qsTr("Enable &preview")
+            }
         }
 
-        ToggleSettingAction {
-            id: showMachineLimitsAction
-            groupName: "preview"
-            valueName: "showMachineLimits"
-            text: qsTr("Sh&ow machine limits")
+        MenuItem {
+            action: ToggleSettingAction {
+                id: showMachineLimitsAction
+                groupName: "preview"
+                valueName: "showMachineLimits"
+                text: qsTr("Sh&ow machine limits")
+            }
         }
 
-        ToggleSettingAction {
-            id: showProgramAction
-            groupName: "preview"
-            valueName: "showProgram"
-            text: qsTr("S&how program")
+        MenuItem {
+            action: ToggleSettingAction {
+                id: showProgramAction
+                groupName: "preview"
+                valueName: "showProgram"
+                text: qsTr("S&how program")
+            }
         }
 
-        ToggleSettingAction {
-            id: showProgramExtentsAction
-            groupName: "preview"
-            valueName: "showProgramExtents"
-            text: qsTr("Show program e&xtents")
+        MenuItem {
+            action: ToggleSettingAction {
+                id: showProgramExtentsAction
+                groupName: "preview"
+                valueName: "showProgramExtents"
+                text: qsTr("Show program e&xtents")
+            }
         }
 
-        ToggleSettingAction {
-            id: showProgramRapidsAction
-            groupName: "preview"
-            valueName: "showProgramRapids"
-            text: qsTr("Show program r&apids")
+        MenuItem {
+            action: ToggleSettingAction {
+                id: showProgramRapidsAction
+                groupName: "preview"
+                valueName: "showProgramRapids"
+                text: qsTr("Show program r&apids")
+            }
         }
 
-        ToggleSettingAction {
-            id: alphaBlendProgramAction
-            groupName: "preview"
-            valueName: "alphaBlendProgram"
-            text: qsTr("Alpha-&blend program")
+        MenuItem {
+            action: ToggleSettingAction {
+                id: alphaBlendProgramAction
+                groupName: "preview"
+                valueName: "alphaBlendProgram"
+                text: qsTr("Alpha-&blend program")
+            }
         }
 
-        ToggleSettingAction {
-            id: showLivePlotAction
-            groupName: "preview"
-            valueName: "showLivePlot"
-            text: qsTr("Sho&w live plot")
+        MenuItem {
+            action: ToggleSettingAction {
+                id: showLivePlotAction
+                groupName: "preview"
+                valueName: "showLivePlot"
+                text: qsTr("Sho&w live plot")
+            }
         }
 
-        ToggleSettingAction {
-            id: showToolAction
-            groupName: "preview"
-            valueName: "showTool"
-            text: qsTr("Sho&w tool")
+        MenuItem {
+            action: ToggleSettingAction {
+                id: showToolAction
+                groupName: "preview"
+                valueName: "showTool"
+                text: qsTr("Sho&w tool")
+            }
         }
 
-        ToggleSettingAction {
-            id: showCoordinateAction
-            groupName: "preview"
-            valueName: "showCoordinate"
-            text: qsTr("Show &coordinate")
+        MenuItem {
+            action: ToggleSettingAction {
+                id: showCoordinateAction
+                groupName: "preview"
+                valueName: "showCoordinate"
+                text: qsTr("Show &coordinate")
+            }
         }
 
         MenuItem { action: ClearBackplotAction { } }
