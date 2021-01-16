@@ -53,6 +53,11 @@ ApplicationItem {
                 }
                 enabled: !g_mdiOverride
                 autoRepeat: false
+
+                onEnabledChanged: {
+                    if (!enabled)
+                        jogAction.stop()
+                }
             }
 
             // Increment key
@@ -71,6 +76,11 @@ ApplicationItem {
                 }
                 enabled: !g_mdiOverride
                 autoRepeat: false
+
+                onEnabledChanged: {
+                    if (!enabled)
+                        jogAction.stop()
+                }
             }
         }
     }
