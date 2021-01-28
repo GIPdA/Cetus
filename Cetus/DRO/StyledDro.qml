@@ -133,9 +133,9 @@ Item {
 
             Connections {
                 target: dro
-                onVelocityVisibleChanged: extraDroModel.makeModel()
-                onDistanceToGoVisibleChanged: extraDroModel.makeModel()
-                onSpindleSpeedVisibleChanged: extraDroModel.makeModel()
+                function onVelocityVisibleChanged() { extraDroModel.makeModel() }
+                function onDistanceToGoVisibleChanged() { extraDroModel.makeModel() }
+                function onSpindleSpeedVisibleChanged() { extraDroModel.makeModel() }
             }
 
             axes: PropertyMapModel {

@@ -5,7 +5,9 @@ ToolButton {
     id: control
     property bool hideIfDisabled: false
 
-    visible: hideIfDisabled ? enabled : true
+    visible: hideIfDisabled
+             ? enabled
+             : (action.visible !== undefined ? action.visible : true)
     flat: true
     display: AbstractButton.IconOnly
     //display: AbstractButton.TextUnderIcon

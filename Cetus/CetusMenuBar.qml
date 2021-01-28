@@ -1,35 +1,14 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+
+//import "items"
+
 import Machinekit.Application.Controls 1.0
 import Machinekit.PathView 1.0
 
-import "items"
+// Menu / MenuItem are from Machinekit.Application.Controls
 
-MenuBar {
-    background: Rectangle {
-        color: "#343434"
-    }
-
-    /*delegate: MenuBarItem {
-        id: menuBarItem
-
-        contentItem: Text {
-            text: menuBarItem.text // TODO: hide &-shortcuts
-            font: menuBarItem.font
-            opacity: enabled ? 1.0 : 0.3
-            color: "#ffffff"
-            horizontalAlignment: Text.AlignLeft
-            verticalAlignment: Text.AlignVCenter
-            elide: Text.ElideRight
-        }
-
-        background: Rectangle {
-            implicitWidth: 40
-            implicitHeight: 40
-            opacity: enabled ? 1 : 0.3
-            color: menuBarItem.highlighted ? "#3f3f3f" : "transparent"
-        }
-    }//*/
+ApplicationMenuBar {
 
     Menu {
         title: qsTr("File")
@@ -56,7 +35,7 @@ MenuBar {
 
         MenuItem {
             text: qsTr("Disconnect from Session")
-            icon.name: "network-disconnect"
+            //icon.name: "network-disconnect"
             onTriggered: window.disconnect()
         }
 
@@ -64,13 +43,6 @@ MenuBar {
             text: qsTr("Shutdown Session")
             action: ShutdownAction {}
             onTriggered: window.shutdown()
-        }
-
-        MenuItem {
-            text: qsTr("Exit User Interface")
-            icon.name: "application-exit"
-            action: Action { shortcut: "Ctrl+Q" }
-            onTriggered: Qt.quit()
         }
     }
     Menu {

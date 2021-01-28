@@ -5,13 +5,14 @@ import Machinekit.Application 1.0
 import Machinekit.Application.Controls 1.0
 import Machinekit.PathView 1.0
 import Machinekit.Controls 1.0
+
 import "./Controls"
 //import "actions"
 import "items"
 
 ToolBar {
     id: root
-    implicitHeight: rowLayout.implicitHeight
+    implicitHeight: rowLayout.implicitHeight+6
     background: Rectangle {
         color: "#343434"
     }
@@ -24,12 +25,16 @@ ToolBar {
         property var stepAction: StepProgramAction { }
     }
 
+    ButtonGroup { id: pathViewModeGroup }
+
     RowLayout {
         id: rowLayout
-        //anchors.fill: parent
+        anchors.fill: parent
+        anchors.margins: 2
+        //enabled: applicationCore.status.ready
 
         FlatToolButton {
-            action: EstopAction { shortcut: "" }
+            action: EstopAction {}
             Rectangle {
                 anchors.fill: parent
                 visible: parent.action.checked_synced
@@ -39,7 +44,7 @@ ToolBar {
             }
         }
         FlatToolButton {
-            action: PowerAction { shortcut: ""; }
+            action: PowerAction {}
             icon.source: action.icon.source // For icon updates
             Rectangle {
                 anchors.fill: parent
@@ -52,9 +57,9 @@ ToolBar {
 
         Spacer {}
 
-        FlatToolButton { action: OpenAction { fileDialog: applicationFileDialog; shortcut: "" } }
-        FlatToolButton { action: OpenAction { fileDialog: remoteFileDialog; remote: true; shortcut: "" } }
-        FlatToolButton { action: ReopenAction { shortcut: "" } }
+        FlatToolButton { action: OpenAction { fileDialog: applicationFileDialog;} }
+        FlatToolButton { action: OpenAction { fileDialog: remoteFileDialog; remote: true; } }
+        FlatToolButton { action: ReopenAction {} }
 
         Spacer {}
         // default -> Run + Step (grayed) + Stop (grayed)
@@ -84,19 +89,45 @@ ToolBar {
             icon.source: action.icon.source // For icon updates
             //hideIfDisabled:true
         }
-        FlatToolButton { action: StopProgramAction { } }
+        FlatToolButton { action: StopProgramAction {} }
 
         Spacer {}
-        FlatToolButton { action: ZoomOutAction { view: pathViewConfig } }
-        FlatToolButton { action: ZoomInAction { view: pathViewConfig } }
-        FlatToolButton { action: ZoomOriginalAction { view: pathViewConfig } }
-        FlatToolButton { action: ViewModeAction { view: pathViewConfig; viewMode: "Top" } visible: action.visible }
-        FlatToolButton { action: ViewModeAction { view: pathViewConfig; viewMode: "RotatedTop" } visible: action.visible }
-        FlatToolButton { action: ViewModeAction { view: pathViewConfig; viewMode: "Front" } visible: action.visible }
-        FlatToolButton { action: ViewModeAction { view: pathViewConfig; viewMode: "Side" } visible: action.visible }
-        FlatToolButton { action: ViewModeAction { view: pathViewConfig; viewMode: "Perspective" } visible: action.visible }
-        //*/
+        FlatToolButton {
+            action: ZoomOutAction { view: pathViewConfig }
+            ButtonGroup.group: pathViewModeGroup
+        }
+        FlatToolButton {
+            action: ZoomInAction { view: pathViewConfig }
+            ButtonGroup.group: pathViewModeGroup
+        }
+        FlatToolButton {
+            action: ZoomOriginalAction { view: pathViewConfig }
+            ButtonGroup.group: pathViewModeGroup
+        }
+        FlatToolButton {
+            action: ViewModeAction { view: pathViewConfig; viewMode: "Top" }
+            ButtonGroup.group: pathViewModeGroup
+        }
+        FlatToolButton {
+            action: ViewModeAction { view: pathViewConfig; viewMode: "RotatedTop" }
+            ButtonGroup.group: pathViewModeGroup
+        }
+        FlatToolButton {
+            action: ViewModeAction { view: pathViewConfig; viewMode: "Front" }
+            ButtonGroup.group: pathViewModeGroup
+        }
+        FlatToolButton {
+            action: ViewModeAction { view: pathViewConfig; viewMode: "Side" }
+            ButtonGroup.group: pathViewModeGroup
+        }
+        FlatToolButton {
+            action: ViewModeAction { view: pathViewConfig; viewMode: "Perspective" }
+            ButtonGroup.group: pathViewModeGroup
+        }
+
         Spacer {}
-        FlatToolButton { action: ClearBackplotAction { shortcut: "" } }
+        FlatToolButton { action: ClearBackplotAction {} }
+
+        Item { Layout.fillWidth: true }
     }
 }

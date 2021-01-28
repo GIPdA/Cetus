@@ -1,15 +1,17 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.13
-//import QtQuick.Controls 1.4 as QQ1
 import QtQuick.Layouts 1.12
 import QtQuick.Dialogs 1.3
 import QtQuick.Window 2.12
+
 import Machinekit.HalRemote 1.0
 import Machinekit.Application 1.0
 import Machinekit.Service 1.0
 import Machinekit.Application.Controls 1.0
 import Machinekit.PathView 1.0
 import Machinekit.VideoView 1.0
+
+//import Qt.labs.platform 1.1 as P // Must be after QtQuick.Controls
 
 //import CetusStyle 1.0
 import "CetusStyle"
@@ -18,7 +20,9 @@ import "DRO"
 import "./StatusBar"
 import "./ManualTab"
 import "./ConfigurationPanel"
+import "./Controls"
 import "items"
+
 
 ServiceWindow {
     id: window
@@ -29,9 +33,13 @@ ServiceWindow {
 
     statusBar:applicationStatusBar
     toolBar: applicationToolBarMobile.active ? applicationToolBarMobile : applicationToolBar
-    menuBar: applicationMenuBar
 
     color: "#343434"
+
+    ApplicationStatusBar { id: applicationStatusBar }
+
+    CetusMenuBar {
+    }
 
     property bool g_mdiOverride: false // When true, MDI overrides Manual controls
 
@@ -87,8 +95,6 @@ ServiceWindow {
         }
     }
 
-    ApplicationStatusBar { id: applicationStatusBar }
-    ApplicationMenuBar { id: applicationMenuBar }
 
     Loader {
         id: applicationToolBar
@@ -177,7 +183,7 @@ ServiceWindow {
             Connections {
                 // Change reduced state if reduced or expanded manually via the split view
                 target: splitView
-                onResizingChanged: {
+                function onResizingChanged() {
                     if (sourceView.reduced && sourceView.height > sourceView.headerHeight)
                         sourceView.reduced = false
                     else if (!sourceView.reduced && sourceView.height <= sourceView.headerHeight)
@@ -268,7 +274,7 @@ ServiceWindow {
 
     ApplicationNotifications {
         id: applicationNotifications
-        anchors.right: parent.right
+        anchors.right: manualView.left
         anchors.bottom: parent.bottom
         anchors.top: parent.top
         anchors.margins: Screen.pixelDensity
@@ -295,4 +301,5 @@ ServiceWindow {
     AboutDialog {
         id: aboutDialog
     }
+//*/
 }
