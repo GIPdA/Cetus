@@ -1,3 +1,7 @@
+/*!
+ * Helper to set corners on a list of items: only top & bottom will have corner radius set
+ */
+
 pragma Singleton
 import QtQuick 2.0
 import QtQuick.Layouts 1.12

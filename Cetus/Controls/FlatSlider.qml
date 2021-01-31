@@ -97,7 +97,7 @@ Slider {
         width: control.availableWidth
         height: control.availableHeight
 
-        RoundedRectangle {
+        RoundedRectangleMask {
             id : mask
             anchors.fill: parent
             visible: false // OpacityMask will display it
