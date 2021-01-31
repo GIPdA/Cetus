@@ -82,7 +82,7 @@ Item {
                             left: parent.left
                             right: parent.right
                             bottom: parent.top
-                            bottomMargin: -5
+                            bottomMargin: -3
                         }
                         visible: index == 0
                         textColor: "white"
@@ -104,7 +104,7 @@ Item {
                             left: parent.left
                             right: parent.right
                             bottom: parent.top
-                            bottomMargin: -5
+                            bottomMargin: -3
                         }
                         visible: index == 0
                         textColor: "white"
@@ -276,7 +276,7 @@ Item {
                             left: parent.left
                             right: parent.right
                             bottom: parent.top
-                            bottomMargin: -5
+                            bottomMargin: -3
                         }
                         visible: index == 0
                         textColor: "white"
@@ -298,7 +298,7 @@ Item {
                             left: parent.left
                             right: parent.right
                             bottom: parent.top
-                            bottomMargin: -5
+                            bottomMargin: -3
                         }
                         visible: index == 0
                         textColor: "white"
@@ -320,7 +320,7 @@ Item {
                             left: parent.left
                             right: parent.right
                             bottom: parent.top
-                            bottomMargin: -5
+                            bottomMargin: -3
                         }
                         visible: index == 0
                         textColor: "white"

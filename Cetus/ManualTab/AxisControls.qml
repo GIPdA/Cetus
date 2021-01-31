@@ -44,14 +44,15 @@ ColumnLayout {
             direction: -1
             distance: jogCombo.distance
             axis: axisRadioGroup.axis
-            text: "-"
+            text: "﹣"
             font.pixelSize: height*0.9
-            font.family: CetusStyle.control.text.font.family
+            //font.family: CetusStyle.control.text.font.family
             font.bold: true
             //font.weight: Font.Medium
 
             contentItem: Text {
-                anchors.fill: parent
+                //anchors.fill: parent
+                anchors.centerIn: parent
                 text: decrementButton.text
                 font: decrementButton.font
                 color: CetusStyle.control.foreground.colorWhen(decrementButton.enabled)
@@ -78,14 +79,15 @@ ColumnLayout {
             direction: 1
             distance: jogCombo.distance
             axis: axisRadioGroup.axis
-            text: "+"
+            text: "﹢"
             font.pixelSize: height*0.9
-            font.family: CetusStyle.control.text.font.family
+            //font.family: CetusStyle.control.text.font.family
             //font.weight: Font.Medium
             font.bold: true
 
             contentItem: Text {
-                anchors.fill: parent
+                //anchors.fill: parent
+                anchors.centerIn: parent
                 text: incrementButton.text
                 font: incrementButton.font
                 color: CetusStyle.control.foreground.colorWhen(incrementButton.enabled)
