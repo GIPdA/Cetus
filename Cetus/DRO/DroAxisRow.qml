@@ -1,5 +1,9 @@
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
+import QtQuick.Controls 2.12
+
+import QtQuick.Controls.Material 2.12
+import QtQuick.Controls.Material.impl 2.12
 
 import "../CetusStyle"
 import "../items"
@@ -12,7 +16,7 @@ Item {
     property string axisName: "?"
     property color axisColor: "#0096EC"
     property color axisTextColor: CetusStyle.control.foreground.color
-    property color backgroundColor: CetusStyle.control.background.color
+    property color backgroundColor: Material.rippleColor //CetusStyle.control.background.color
 
     default property alias content: contentLayout.data
 
@@ -33,6 +37,7 @@ Item {
         radiusStyle: root.radiusStyle
         color: root.backgroundColor
     }
+    //Component.onCompleted: print(Material.rippleColor.a)
 
     RoundedRectangle {
         id: axisIndicator
@@ -47,7 +52,7 @@ Item {
 
         radiusStyle: root.radiusStyle
 
-        Text {
+        Label {
             id: axisTitleText
             anchors.fill: parent
             anchors.margins: 2
@@ -55,7 +60,7 @@ Item {
             verticalAlignment: Text.AlignVCenter
             font.pixelSize: 50
             text: root.axisName
-            color: root.axisTextColor
+            //color: root.axisTextColor
             fontSizeMode: Text.Fit
             minimumPixelSize: 10
         }

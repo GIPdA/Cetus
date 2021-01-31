@@ -6,6 +6,8 @@ import Machinekit.Application.Controls 1.0
 import Machinekit.PathView 1.0
 import Machinekit.Controls 1.0
 
+import QtQuick.Controls.Material 2.12
+
 import "./Controls"
 //import "actions"
 import "items"
@@ -13,9 +15,9 @@ import "items"
 ToolBar {
     id: root
     implicitHeight: rowLayout.implicitHeight+6
-    background: Rectangle {
-        color: "#343434"
-    }
+    /*background: Rectangle {
+        color: "#000000"
+    }//*/
 
     QtObject {
         id: d
@@ -106,22 +108,27 @@ ToolBar {
         }
         FlatToolButton {
             action: ViewModeAction { view: pathViewConfig; viewMode: "Top" }
+            checkable: true
             ButtonGroup.group: pathViewModeGroup
         }
         FlatToolButton {
             action: ViewModeAction { view: pathViewConfig; viewMode: "RotatedTop" }
+            checkable: true
             ButtonGroup.group: pathViewModeGroup
         }
         FlatToolButton {
             action: ViewModeAction { view: pathViewConfig; viewMode: "Front" }
+            checkable: true
             ButtonGroup.group: pathViewModeGroup
         }
         FlatToolButton {
             action: ViewModeAction { view: pathViewConfig; viewMode: "Side" }
+            checkable: true
             ButtonGroup.group: pathViewModeGroup
         }
         FlatToolButton {
             action: ViewModeAction { view: pathViewConfig; viewMode: "Perspective" }
+            checkable: true
             ButtonGroup.group: pathViewModeGroup
         }
 

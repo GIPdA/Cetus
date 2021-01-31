@@ -11,6 +11,8 @@ import Machinekit.Application.Controls 1.0
 import Machinekit.PathView 1.0
 import Machinekit.VideoView 1.0
 
+import QtQuick.Controls.Material 2.12
+
 //import Qt.labs.platform 1.1 as P // Must be after QtQuick.Controls
 
 //import CetusStyle 1.0
@@ -34,7 +36,6 @@ ServiceWindow {
     statusBar:applicationStatusBar
     toolBar: applicationToolBarMobile.active ? applicationToolBarMobile : applicationToolBar
 
-    color: "#343434"
 
     ApplicationStatusBar { id: applicationStatusBar }
 
